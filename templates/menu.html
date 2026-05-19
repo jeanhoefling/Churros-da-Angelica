@@ -1,13 +1,19 @@
 <nav>
     <div id="logo-home">
-        <h1>Churros da Angélica</h1>
+        <img src="{{ url_for('static', filename='assets/logo.png') }}">
     </div>
     <div class="nav-items">
-        <a href="/vendas" class="{{ 'active' if request.path == '/vendas' else ''}}">Vendas</a>
-        <a id="nav-home" class="{{ 'active' if request.path == '/' else ''}}" href="/">Home</a>
-        <a href="/pedidos" class="{{ 'active' if request.path == '/pedidos' else ''}}">Pedido</a>
+        <a href="/vendas" class="{{ 'active' if request.path == '/vendas' else ''}}">
+            <img src="{{ url_for('static', filename='assets/carrinho.png') }}">Vendas
+        </a>
+        <a id="nav-home" class="{{ 'active' if request.path == '/' else ''}}" href="/">
+            <img src="{{ url_for('static', filename='assets/casa.png') }}">Home
+        </a>
+        <a href="/pedidos" class="{{ 'active' if request.path == '/pedidos' else ''}}">
+            <img src="{{ url_for('static', filename='assets/pedidos.png') }}">Pedido
+        </a>
     </div>
     <div id="whatsapp-menu">
-        <button>Whatsapp</button>
+        <a href="https://wa.me/55xxxxxxxxx"><img src="{{ url_for('static', filename='assets/Whatsapp.png') }}">Whatsapp</a>
     </div>
 </nav>

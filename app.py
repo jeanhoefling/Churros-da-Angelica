@@ -12,12 +12,16 @@ db = conn.cursor()
 def index():
     return render_template("index.html")
 
-@app.route("/vendas", methods=["GET", "POST"])
+@app.route("/vendas")
 def vendas():
+    return render_template("vendas.html")
+    
+@app.route("/pedidos", methods=["GET", "POST"])
+def pedidos():
     if request.method == "POST":
-        return render_template("vendas.html")
+        return render_template("pedidos.html")
     else:
-        return render_template("vendas.html")
+        return render_template("pedidos.html")
     
 if __name__ == "__main__":
     app.run(debug=True)

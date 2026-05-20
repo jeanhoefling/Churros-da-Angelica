@@ -167,18 +167,20 @@ nav a img {
 .section-2 h2 {
     font-size: 200%;
     color: rgb(85, 58, 44);
+    margin-top: 2%;
     font-weight: bold;
 }
 
 .section-2 p {
     font-size: 120%;
-    font-weight: bold;
+    margin-top: 2%;
 }
 
 .section-2 h3 {
     font-size: 150%;
     color: rgb(253, 115, 129);
     font-weight: bold;
+    margin-top: 3%;
 }
 
 .cards {
@@ -191,9 +193,13 @@ nav a img {
 
 .card {
     background-color: white;
-    border: 2px solid #aaaaaa;
-    border-radius: 2px;
+    border: 3px solid #aaaaaa;
+    border-radius: 3px;
     padding: 1% 1%;
+}   
+
+.card:hover {
+    scale: 1.1;    
 }
 
 
@@ -220,4 +226,15 @@ nav a img {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.section-hidden {
+    opacity: 0;
+    transform: translateY(50%);
+    transition: all 0.6s ease;
+}
+
+.section-show {
+    opacity: 1;
+    transform: translateY(0);
 }

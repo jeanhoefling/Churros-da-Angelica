@@ -4,14 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendas</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <header>
         {% include "menu.html" %}
     </header>
-    <body>
-        <h1>pedidos</h1>
+    <body id="pedidos-page">
+        <h1>Novo Pedido</h1>
+        <h2>Adicione um novo pedido</h2>
+        <form action="/pedidos" method="POST">
+            <div>
+                <h3>Dados do Cliente</h3>
+                <h4>Nome</h4>
+                <input placeholder="Nome do cliente">
+                <h4>Whatsapp</h4>
+                <input placeholder="55900001111">
+                <h4>Observação</h4>
+                <input placeholder="Alguma observação sobre o pedido...">
+            </div>
+            <div>
+                <h3>Itens do Pedido</h3>
+                <div id="itens">
+                    <div class="item">
+                        <h4>Produto</h4>
+                    </div>
+                    <div class="item">
+                        <h4>Quantidade</h4>
+                    </div>
+                    <div class="item">
+                        <h4> Preço Unit.</h4>
+                    </div>
+                    <div class="item">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="item">
+                        
+                    </div>
+                </div>
+                <a>+ Adicionar Produto</a>
+            </div>
+        </form>
     </body>
     <footer>
         {% include "footer.html" %}

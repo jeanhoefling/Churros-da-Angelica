@@ -257,6 +257,24 @@ footer a:hover, footer p:hover {
     width: 2vw;
 }
 
+/* PEDIDOS */
+
+#pedidos-page h1 {
+    font-size: 200px;
+}
+
+#pedidos-page form {
+    display: flex;
+}
+
+#pedidos-page #itens {
+    display: flex;
+}
+
+#pedidos-page #item {
+    display: flex;
+    flex-direction: column;
+}
 
 /* ANIMAÇÕES */
 

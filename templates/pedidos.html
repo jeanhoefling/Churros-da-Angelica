@@ -10,42 +10,59 @@
     <header>
         {% include "menu.html" %}
     </header>
-    <body id="pedidos-page">
+    <main id="pedidos-page">
         <h1>Novo Pedido</h1>
         <h2>Adicione um novo pedido</h2>
         <form action="/pedidos" method="POST">
-            <div>
+            <div id="dados-cliente">
                 <h3>Dados do Cliente</h3>
                 <h4>Nome</h4>
                 <input placeholder="Nome do cliente">
                 <h4>Whatsapp</h4>
                 <input placeholder="55900001111">
                 <h4>Observação</h4>
-                <input placeholder="Alguma observação sobre o pedido...">
+                <input id="observacao" placeholder="Alguma observação sobre o pedido...">
             </div>
-            <div>
+            <div id="dados-pedido">
                 <h3>Itens do Pedido</h3>
                 <div id="itens">
-                    <div class="item">
+                    <div id="itens-head">
                         <h4>Produto</h4>
-                    </div>
-                    <div class="item">
                         <h4>Quantidade</h4>
-                    </div>
-                    <div class="item">
-                        <h4> Preço Unit.</h4>
-                    </div>
-                    <div class="item">
+                        <h4>Preço Unit.</h4>
                         <h4>Total</h4>
+                        <h4>X</h4>
                     </div>
-                    <div class="item">
-                        
+                    <div id="itens-row">
+                        <select>
+                            <option value="tradicional">Churros Tradicional</option>
+                            <option value="recheado">Churros Recheado</option>
+                            <option value="mini">Mini Churros</option>
+                        </select>
+                        <div id="div-quantidade">
+                            <button>-</button>
+                            <input>
+                            <button>+</button>
+                        </div>
+                        <p>R$ PREÇO</p>
+                        <p>R$ TOTAL</p>
+                        <p>X</p>
                     </div>
                 </div>
-                <a>+ Adicionar Produto</a>
+                <div id="adicionar-total">
+                    <button>+ Adicionar produto</button>
+                    <div>
+                        <h3>
+                            Total do Pedido:
+                        </h3>
+                        <p>
+                            R$ 21,00
+                        </p>
+                    </div>
+                </div>
             </div>
         </form>
-    </body>
+    </main>
     <footer>
         {% include "footer.html" %}
     </footer>

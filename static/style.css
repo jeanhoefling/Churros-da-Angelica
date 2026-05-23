@@ -259,21 +259,140 @@ footer a:hover, footer p:hover {
 
 /* PEDIDOS */
 
+#pedidos-page {
+    padding: 2vh 2% 2vh 2%;
+    background-color: #eeeeee;
+}
+
 #pedidos-page h1 {
-    font-size: 200px;
+    font-size: 300%;
+    color: rgb(85, 58, 44);
+    font-weight: bold;
+}
+
+#pedidos-page h2 {
+    font-size: 150%;
+    color: rgb(85, 58, 44);
+    margin-top: 1vh;
+}
+
+#pedidos-page h3 {
+    font-size: 180%;
+    color: rgb(85, 58, 44);
+    margin-top: 1vh;
+    font-weight: bold;
+}
+
+#pedidos-page h4 {
+    font-size: 120%;
+    color: rgb(85, 58, 44);
+    margin-top: 2vh;
+    font-weight: bold;
+}
+
+#pedidos-page input {
+    width: 95%;
+    padding: 1vh 1% 1vh 1%;
+    margin-top: 0.5vh;
+    border-radius: 2px;
 }
 
 #pedidos-page form {
+    gap: 2%;
     display: flex;
+    margin-top: 2vh;
 }
 
-#pedidos-page #itens {
+#pedidos-page #itens-head {
     display: flex;
+    padding: 0vh 1% 1vh 1%;
+    background-color: #eeeeee;
+    border: 2px solid #cccccc;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
 }
 
-#pedidos-page #item {
+#pedidos-page #itens-head h4:nth-child(1) {
+    width: 30%;
+}
+
+#pedidos-page #itens-head h4:nth-child(2) {
+    width: 25%;
+}
+
+#pedidos-page #itens-head h4:nth-child(3) {
+    width: 25%;
+}
+
+#pedidos-page #itens-head h4:nth-child(4) {
+    width: 20%;
+}
+
+#pedidos-page #itens-row {
     display: flex;
-    flex-direction: column;
+    padding: 1vh 1% 1vh 1%;
+    border: 1px solid #cccccc;
+}
+
+#pedidos-page #dados-cliente {
+    width: 30%;
+    padding: 2vh 1% 2vh 1%;
+    background-color: #ffffff;
+    border: 3px solid #bbbbbb;
+    border-radius: 3px;
+}
+
+#pedidos-page #dados-pedido {
+    width: 70%;
+    padding: 2vh 1% 2vh 1%;
+    background-color: #ffffff;
+    border: 3px solid #bbbbbb;
+    border-radius: 3px;
+}
+
+#pedidos-page #observacao {
+    padding-bottom: 15vh;
+}
+
+#pedidos-page #div-quantidade {
+    display: flex;
+    width: 10%;
+    gap: 0px;
+    margin-right: 15%;
+}
+
+#pedidos-page #div-quantidade button {
+    width: 15vh;
+}
+
+#pedidos-page #div-quantidade input {
+    width: 5vh;
+}
+
+#pedidos-page #itens-row select {
+    margin-right: 10%;
+    width: 20%;
+}
+
+#pedidos-page #itens-row p:nth-of-type(1) {
+    width: 25%;
+}
+
+#pedidos-page #itens-row p:nth-of-type(2) {
+    width: 20%;
+}
+
+#pedidos-page #adicionar-total {
+    margin-top: 2vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+#pedidos-page #adicionar-total button {
+    border: 2px solid rgb(253, 115, 129);
+    border-radius: 2px;
+    color: rgb(253, 115, 129);
+    background-color: white;
 }
 
 /* ANIMAÇÕES */

@@ -18,13 +18,28 @@ sections.forEach((section) => {
 
 // Pedidos - Adicionar Produto
 
-let produtos = 0;
-const itens_row = document.querySelector('#itens-row');
-function adicionar_produto () {
-    if (produtos < 2) {
-        produtos++;   
+let produtos = 1;
+const pedidos_itens = document.querySelector('#itens');
+const btn_pedidos_adicionar = document.querySelector('#btn_pedidos_adicionar')
+btn_pedidos_adicionar.addEventListener ("click", () => {
+    if (produtos < 3) {
+        pedidos_itens.innerHTML += `
+            <div class="itens-row">
+            <select>
+            <option value="tradicional">Churros Tradicional</option>
+            <option value="recheado">Churros Recheado</option>
+            <option value="mini">Mini Churros</option>
+            </select>
+            <div id="div-quantidade">
+            <button>-</button>
+            <input>
+            <button>+</button>
+            </div>
+            <p>R$ PREÇO</p>
+            <p>R$ TOTAL</p>
+            <p>X</p>
+            </div>
+    `;
+        produtos++;
     }
-    for (let i = 0; i < produtos; i++) {
-        document.append(itens_row);
-    }
-}
+});

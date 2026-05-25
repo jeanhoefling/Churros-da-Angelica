@@ -60,11 +60,16 @@
                         </p>
                     </div>
                 </div>
+                <div id="div-salvar-pedido">
+                    <button>Limpar</button>
+                    <button>Salvar Pedido</button>
+                </div>
             </div>
         </form>
     </main>
     <footer>
         {% include "footer.html" %}
     </footer>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

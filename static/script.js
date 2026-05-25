@@ -14,3 +14,17 @@ const observer = new IntersectionObserver((entries) => {
 sections.forEach((section) => {
     observer.observe(section);
 });
+
+
+// Pedidos - Adicionar Produto
+
+let produtos = 0;
+const itens_row = document.querySelector('#itens-row');
+function adicionar_produto () {
+    if (produtos < 2) {
+        produtos++;   
+    }
+    for (let i = 0; i < produtos; i++) {
+        document.append(itens_row);
+    }
+}

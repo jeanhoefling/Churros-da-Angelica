@@ -343,6 +343,8 @@ footer a:hover, footer p:hover {
 }
 
 #pedidos-page #dados-pedido {
+    display: flex;
+    flex-direction: column;
     width: 70%;
     padding: 2vh 1% 2vh 1%;
     background-color: #ffffff;
@@ -370,6 +372,7 @@ footer a:hover, footer p:hover {
 }
 
 #pedidos-page #itens-row select {
+    cursor: pointer;
     margin-right: 10%;
     width: 20%;
 }
@@ -389,11 +392,43 @@ footer a:hover, footer p:hover {
 }
 
 #pedidos-page #adicionar-total button {
+    height: 70%;
+    padding: 1vh 4% 1vh 4%;
     border: 2px solid rgb(253, 115, 129);
     border-radius: 2px;
     color: rgb(253, 115, 129);
     background-color: white;
 }
+
+#pedidos-page #div-salvar-pedido {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 2%;
+}
+
+#pedidos-page #div-salvar-pedido button:nth-child(1) {
+    padding: 2vh 10% 2vh 10%;
+    background-color: #eeeeee;
+    border: 2px solid #aaaaaa;
+    border-radius: 4px;
+    color: rgb(85, 58, 44);
+}
+
+#pedidos-page #div-salvar-pedido button:nth-child(2) {
+    padding: 2vh 10% 2vh 10%;
+    background-color: rgb(253, 115, 129);
+    border: 2px solid rgb(253, 115, 129);
+    border-radius: 4px;
+    color: white;
+}
+
+#pedidos-page #dados-pedido button {
+    cursor: pointer;
+}  
+
+
+
 
 /* ANIMAÇÕES */
 

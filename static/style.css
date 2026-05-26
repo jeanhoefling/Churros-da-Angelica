@@ -356,18 +356,18 @@ footer a:hover, footer p:hover {
     padding-bottom: 15vh;
 }
 
-#pedidos-page #div-quantidade {
+#pedidos-page .div-quantidade {
     display: flex;
     width: 10%;
     gap: 0px;
     margin-right: 15%;
 }
 
-#pedidos-page #div-quantidade button {
+#pedidos-page .div-quantidade button {
     width: 15vh;
 }
 
-#pedidos-page #div-quantidade input {
+#pedidos-page .div-quantidade input {
     width: 5vh;
 }
 
@@ -427,6 +427,17 @@ footer a:hover, footer p:hover {
     cursor: pointer;
 }  
 
+#pedidos-page input[type="number"]::-webkit-outer-spin-button, #pedidos-page 
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#pedidos-page input[type="number"] {
+    text-align: center;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
 
 
 

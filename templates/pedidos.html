@@ -17,11 +17,11 @@
             <div id="dados-cliente">
                 <h3>Dados do Cliente</h3>
                 <h4>Nome</h4>
-                <input placeholder="Nome do cliente">
+                <input name="nome" placeholder="Nome do cliente" type="text" required>
                 <h4>Whatsapp</h4>
-                <input placeholder="55900001111">
+                <input name="whatsapp" placeholder="55900001111" type="text">
                 <h4>Observação</h4>
-                <input id="observacao" placeholder="Alguma observação sobre o pedido...">
+                <input name="observacao" id="observacao" placeholder="Alguma observação sobre o pedido..." type="text">
             </div>
             <div id="dados-pedido">
                 <h3>Itens do Pedido</h3>
@@ -34,18 +34,18 @@
                         <h4>X</h4>
                     </div>
                     <div class="itens-row">
-                        <select>
+                        <select name="produtos[]">
                             <option value="tradicional">Churros Tradicional</option>
                             <option value="recheado">Churros Recheado</option>
                             <option value="mini">Mini Churros</option>
                         </select>
-                        <div id="div-quantidade">
-                            <button>-</button>
-                            <input>
-                            <button>+</button>
+                        <div class="div-quantidade">
+                            <button onclick="somar(this, -1)" type="button">-</button>
+                            <input type="number" name="quantidades[]" value="1" min="1">
+                            <button onclick="somar(this, 1)" type="button">+</button>
                         </div>
-                        <p>R$ PREÇO</p>
-                        <p>R$ TOTAL</p>
+                        <p class="preco_unidade">R$ 8,00</p>
+                        <p class="preco_total">R$ 8,00</p>
                         <p>X</p>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div id="div-salvar-pedido">
                     <button>Limpar</button>
-                    <button>Salvar Pedido</button>
+                    <button type="submit">Salvar Pedido</button>
                 </div>
             </div>
         </form>

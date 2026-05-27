@@ -16,7 +16,7 @@ sections.forEach((section) => {
 });
 
 
-// Pedidos - Função para captar as novas rows inseridas pelo botão
+// Inserir Pedido - Função para captar as novas rows inseridas pelo botão
 function captarNovosSelects () {
     document.querySelectorAll('.itens-row select').forEach(select => {
         select.addEventListener("change", () => {
@@ -32,7 +32,7 @@ function captarNovosSelects () {
 // Essa chamada é para pegar o elemento que já está por padrão na página
 captarNovosSelects()
 
-// Pedidos - Adicionar Produto
+// Inserir Pedido - Adicionar Produto
 let produtos = 1
 const pedidos_itens = document.querySelector('#itens');
 const btn_pedidos_adicionar = document.querySelector('#btn_pedidos_adicionar')
@@ -62,7 +62,7 @@ btn_pedidos_adicionar.addEventListener ("click", () => {
 });
 
 
-// Botões + e - na página pedidos
+// Botões + e - na página inserir pedidos
 function somar (btn, valor) {
     const div_btn = btn.parentElement;
     const input = div_btn.querySelector("input");
@@ -80,7 +80,7 @@ function somar (btn, valor) {
 }
 
 
-// Preço unidade e preço total da página pedidos
+// Preço unidade e preço total da página inserir pedidos
 
 const valores = {
     tradicional: 8,
@@ -105,4 +105,50 @@ function removeRow (row) {
     row.remove()
     produtos--
     atualizaTotal()
+}
+
+function createCards (num) {
+    let rows
+    if ((num % 4) == 0) {
+        rows = num / 4
+    }
+    else {
+        rows = Math.trunc(num / 4) + 1
+    }
+
+
+    const start = document.querySelector('#pedidos-page div')
+    for (let i = 0; i < rows; i++) {
+        start.insertAdjacentHTML ('afterend', `
+                <div class="cards-row">
+                </div>
+            `)
+    }
+
+
+    const tag_rows = document.querySelectorAll('.cards-row').forEach((tag_row) => {
+        for (let i = 0; i < 4; i++) {
+            if (num == 0) return
+            tag_row.insertAdjacentHTML ('beforeend', `
+                    <div class="card">
+                    <div>
+                    <h3>#000ID</h3>
+                    <p>TEMPO</p>
+                    </div>
+                    <h4>NOME</h4>
+                    <ul>
+                    <li>XX ITEM</li>
+                    <li>Total: R$ XX,00</li>
+                    </ul>
+                    <div class="div-whatsapp">
+                    <a><img src="/static/assets/whatsapp.png"></a>
+                    <p>NUMERO</p>
+                    </div>
+                    <button>Marcar como Concluído</button>
+                    <button>Cancelar Pedido</button>
+                    </div>
+                `)
+            num--
+        }
+    })
 }

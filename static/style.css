@@ -3,6 +3,12 @@
     padding: 0px;
 }
 
+h1 {
+    font-size: 300%;
+    color: rgb(85, 58, 44);
+    font-weight: bold;
+}
+
 /* MENU */
 header {
     min-height: 15vh;
@@ -112,12 +118,6 @@ nav a img {
     width: 30%;
 }
 
-.section-1 h1 {
-    font-size: 350%;
-    color: rgb(85, 58, 44);
-    font-weight: bold;
-}
-
 .section-1 p {
     font-size: 200%;
     margin-top: 10%;
@@ -158,9 +158,6 @@ nav a img {
 }
 
 .section-2 h1 {
-    font-size: 350%;
-    color: rgb(85, 58, 44);
-    font-weight: bold;
     margin-left: 11%;
 }
 
@@ -183,7 +180,7 @@ nav a img {
     margin-top: 3%;
 }
 
-.cards {
+.section-2 .cards {
     display: flex;
     justify-content: space-between;
     width: 80%;
@@ -191,14 +188,14 @@ nav a img {
     margin-top: 2%;
 }
 
-.card {
+.section-2 .card {
     background-color: white;
     border: 3px solid #aaaaaa;
     border-radius: 3px;
     padding: 1% 1%;
 }   
 
-.card:hover {
+.section-2 .card:hover {
     scale: 1.1;    
 }
 
@@ -262,12 +259,6 @@ footer a:hover, footer p:hover {
 #inserir-pedido-page {
     padding: 2vh 2% 2vh 2%;
     background-color: #eeeeee;
-}
-
-#inserir-pedido-page h1 {
-    font-size: 300%;
-    color: rgb(85, 58, 44);
-    font-weight: bold;
 }
 
 #inserir-pedido-page h2 {
@@ -462,6 +453,11 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* PEDIDOS */
 
+#pedidos-page {
+    padding: 3vh 3% 5vh 3%;
+    background-color: #eeeeee;
+}
+
 #pedidos-page div {
     display: flex;
     justify-content: space-between;
@@ -477,9 +473,93 @@ input[type="number"]::-webkit-inner-spin-button {
     flex-direction: row;
 }
 
-#pedidos-page div div div div {
-    display: flex;
-    flex-direction: column;
+#pedidos-page #btn-inserir-pedido {
+    color: white;
+    background-color: rgb(253, 115, 129);
+    padding: 1vh 2% 1.5vh 2%;
+    border-radius: 3px;
+    height: 100%;
+    font-size: 110%;
+    text-decoration: none;
+}
+
+#pedidos-page #btn-inserir-pedido:hover {
+    scale: 1.1;
+}
+
+#pedidos-page .cards-row {
+    margin-top: 3vh;
+}
+
+#pedidos-page .card {
+    width: 17.5%;
+    height: 35vh;
+    padding: 1vh 1% 1vh 1%;
+    background-color: white;
+    border: 2px solid #cccccc;
+    border-radius: 3px;
+}
+
+#pedidos-page .card h3 {
+    font-size: 120%;
+    color:rgb(85, 58, 44);
+    font-weight: bold;
+}
+
+#pedidos-page .card h4 {
+    font-size: 150%;
+    margin-top: 1vh;
+    color:rgb(85, 58, 44);
+    font-weight: bold;
+}
+
+#pedidos-page .card ul {
+    padding-left: 10%;
+    margin-bottom: 1vh;
+}
+
+#pedidos-page .card li {
+    font-size: 110%;
+}
+
+#pedidos-page .card .div-whatsapp {
+    justify-content: left;
+    align-items: center;
+}
+
+#pedidos-page .card a {
+    width: fit-content;
+    height: fit-content;
+    margin-right: 10%;
+}
+
+#pedidos-page .card img {
+    width: 120%;
+    height: 6vh;
+}
+
+#pedidos-page .card button:nth-of-type(1) {
+    margin-top: 1vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    background-color: rgb(253, 115, 129);
+    color: white;
+    border-radius: 3px;
+}
+
+#pedidos-page .card button:nth-of-type(2) {
+    margin-top: 0.1vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    background-color: #cccccc;
+    color: rgb(85, 58, 44);
+    border: 2px solid rgb(85, 58, 44);
+    border-radius: 3px;
+}
+
+#pedidos-page h2 {
+    font-size: 180%;
+    margin-top: 1vh;
 }
 
 

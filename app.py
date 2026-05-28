@@ -28,18 +28,17 @@ def index():
 
 @app.route("/vendas")
 def vendas():
-    return render_template("vendas.html")
+    db.execute('SELECT nome, tradicional, recheado, mini, valor_total FROM pedidos WHERE status = (?)', ("Concluído",))
+    ultimas_vendas = db.fetchall()
+    return render_template("vendas.html", ultimas_vendas=ultimas_vendas)
 
-@app.route("/pedidos", methods=["GET", "PATCH"])
+@app.route("/pedidos", methods=["GET"])
 def pedidos():
-    if request.method == "PATCH":
-        return render_template("pedidos.html")
-    else:
-        db.execute('SELECT COUNT(*) as num_pedidos FROM pedidos WHERE status = (?)', ("Em andamento",))
-        num_pedidos = int(db.fetchone()[0])
-        db.execute('SELECT id, nome, whatsapp, tradicional, recheado, mini, valor_total FROM pedidos')
-        items = db.fetchall()
-        return render_template("pedidos.html", num_pedidos=num_pedidos, items=items)
+    db.execute('SELECT COUNT(*) as num_pedidos FROM pedidos WHERE status = (?)', ("Em andamento",))
+    num_pedidos = int(db.fetchone()[0])
+    db.execute('SELECT id, nome, whatsapp, tradicional, recheado, mini, valor_total FROM pedidos WHERE status = (?)', ("Em andamento",))
+    items = db.fetchall()
+    return render_template("pedidos.html", num_pedidos=num_pedidos, items=items)
     
 @app.route("/cancelar-pedido", methods=["POST"])
 def cancelarPedido():
@@ -94,7 +93,7 @@ def inserirPedido():
                     )
         conn.commit()
 
-        return redirect("/pedidos")
+        return render_template("inserir-pedido.html")
     else:
         return render_template("inserir-pedido.html")
     

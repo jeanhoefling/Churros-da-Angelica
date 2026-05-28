@@ -9,6 +9,13 @@ h1 {
     font-weight: bold;
 }
 
+.btn-1 {
+    background-color: rgb(253, 115, 129);
+    color: white;
+    border: 2px solid rgb(253, 115, 129);
+    border-radius: 3px;
+}
+
 /* MENU */
 header {
     min-height: 15vh;
@@ -428,10 +435,6 @@ footer a:hover, footer p:hover {
 
 #inserir-pedido-page #div-salvar-pedido button:nth-child(2) {
     padding: 2vh 10% 2vh 10%;
-    background-color: rgb(253, 115, 129);
-    border: 2px solid rgb(253, 115, 129);
-    border-radius: 4px;
-    color: white;
 }
 
 #inserir-pedido-page #dados-pedido button:hover {
@@ -544,8 +547,6 @@ input[type="number"]::-webkit-inner-spin-button {
     margin-top: 1vh;
     padding-top: 1vh;
     padding-bottom: 1vh;
-    background-color: rgb(253, 115, 129);
-    color: white;
     border-radius: 3px;
     width: 100%;
 }
@@ -570,7 +571,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 #vendas-page {
     padding: 5vh 3% 4vh 3%;
-    background-color: #eeeeee;
+    background-color: #fcf8f4;
 }
 
 #vendas-page #header {
@@ -659,6 +660,73 @@ input[type="number"]::-webkit-inner-spin-button {
     flex-direction: column;
 }
 
+#vendas-page #ultimas-vendas {
+    padding: 1vh 1% 1vh 1%;
+    background-color: white;
+    border: 3px solid #cccccc;
+    border-radius: 3px;
+}
+
+#vendas-page #ultimas-vendas #header-row {
+    display: flex;
+    background-color: #fbf1ea;
+    border: 2px solid #cccccc;
+    border-radius: 3px;
+    padding: 0.5vh 1% 0.5vh 1%;
+    margin-top: 2vh;
+}
+
+#vendas-page #ultimas-vendas #header-row h4:nth-of-type(1) {
+    width: 15%;
+}
+
+#vendas-page #ultimas-vendas #header-row h4:nth-of-type(2) {
+    width: 20%;
+}
+
+#vendas-page #ultimas-vendas #header-row h4:nth-of-type(3) {
+    width: 50%;
+}
+
+#vendas-page #ultimas-vendas #header-row h4:nth-of-type(4) {
+    width: 15%;
+}
+
+#vendas-page #ultimas-vendas button {
+    display: flex;
+    padding: 1vh 2% 1vh 2%;
+    margin-left: auto;
+    margin-top: 4vh;
+}
+
+#vendas-page h4 {
+    color: rgb(85, 58, 44);
+    font-size: 120%;
+}
+
+#vendas-page #ultimas-vendas .row {
+    display: flex;
+    background-color:white;
+    border: 2px solid #cccccc;
+    border-radius: 3px;
+    padding: 0.5vh 1% 0.5vh 1%;
+}
+
+#vendas-page #ultimas-vendas .row p:nth-of-type(1) {
+    width: 15%;
+}
+
+#vendas-page #ultimas-vendas .row p:nth-of-type(2) {
+    width: 20%;
+}
+
+#vendas-page #ultimas-vendas .row p:nth-of-type(3) {
+    width: 50%;
+}
+
+#vendas-page #ultimas-vendas .row p:nth-of-type(4) {
+    width: 15%;
+}
 
 /* ANIMAÇÕES */
 

@@ -24,7 +24,7 @@
     <footer>
         {% include "footer.html" %}
     </footer>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='pedidos.js') }}"></script>
     <script>createCards({{ num_pedidos }}, {{ items | tojson }})</script>
 </body>
 

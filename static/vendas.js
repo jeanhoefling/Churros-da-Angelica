@@ -19,9 +19,13 @@ function createUltimasVendas (pedidos) {
         pedidos_num = 4
     }
     for (let i = 1; i <= pedidos_num; i++) {
+        let dataStr = pedidos[pedidos.length - i][5].split(" ")[0]
+        let ano = dataStr.slice(2, 4)
+        let mes = dataStr.slice(5, 7)
+        let dia = dataStr.slice(8, 10)
         start.insertAdjacentHTML('afterend', `
                 <div class="row">
-                <p>DATA</p>
+                <p>${dia}/ ${mes}/${ano}</p>
                 <p>${pedidos[pedidos.length - i][0]}</p>
                 <p>${pedidos[pedidos.length - i][1]}x Tradicional, ${pedidos[pedidos.length - i][2]}x Recheado, ${pedidos[pedidos.length - i][3]}x Mini</p>
                 <p>R$ ${pedidos[pedidos.length - i][4]},00</p>
@@ -40,7 +44,7 @@ function createTodasVendas (pedidos) {
     for (let i = 1; i <= pedidos_num; i++) {
         start.insertAdjacentHTML('afterend', `
                 <div class="row">
-                <p>DATA</p>
+                <p>${pedidos[pedidos.length - i][5]}</p>
                 <p>${pedidos[pedidos.length - i][0]}</p>
                 <p>${pedidos[pedidos.length - i][1]}x Tradicional, ${pedidos[pedidos.length - i][2]}x Recheado, ${pedidos[pedidos.length - i][3]}x Mini</p>
                 <p>R$ ${pedidos[pedidos.length - i][4]},00</p>

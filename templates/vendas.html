@@ -23,28 +23,28 @@
                 <img src="{{ url_for('static', filename='assets/coracao.png') }}">
                 <div>
                     <p>Total de Vendas</p>
-                    <p>R$ XXXX</p>
+                    <p>R$ {{ data_cards[0][2] or 0 }}0</p>
                 </div>
             </div>
             <div class="card">
                 <img src="{{ url_for('static', filename='assets/coracao.png') }}">
                 <div>
                     <p>Pedidos</p>
-                    <p>XX</p>
+                    <p>{{ data_cards[0][1] }}</p>
                 </div>
             </div>
             <div class="card">
                 <img src="{{ url_for('static', filename='assets/coracao.png') }}">
                 <div>
                     <p>Ticket Médio</p>
-                    <p>R$ XXXX</p>
+                    <p>R$ {{ "%.2f"|format(data_cards[0][2] or 0) }}</p>
                 </div>
             </div>
             <div class="card">
                 <img src="{{ url_for('static', filename='assets/coracao.png') }}">
                 <div>
                     <p>Produtos Vendidos</p>
-                    <p>XXX</p>
+                    <p>{{ data_cards[0][3] }}</p>
                 </div>
             </div>
         </div>

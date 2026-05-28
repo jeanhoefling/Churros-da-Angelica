@@ -25,7 +25,7 @@ function createCards (num, items) {
                     <div class="card">
                     <div>
                     <h3>ID: #${items[cont][0]}</h3>
-                    <p>TEMPO</p>
+                    <p>TEMPO: ${Math.trunc(items[cont][7])} min</p>
                     </div>
                     <h4>${items[cont][1]}</h4>
                     <ul>

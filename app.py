@@ -1,6 +1,7 @@
 import os
 import sqlite3
 from flask import Flask, flash, redirect, render_template, request
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -17,6 +18,7 @@ db.execute('''CREATE TABLE IF NOT EXISTS pedidos (
             mini INTEGER,
             valor_total INTEGER,
             observacao TEXT,
+            data_pedido TIMESTAMP,
             status TEXT)
            ''')
 
@@ -28,16 +30,24 @@ def index():
 
 @app.route("/vendas")
 def vendas():
-    db.execute('SELECT nome, tradicional, recheado, mini, valor_total FROM pedidos WHERE status = (?)', ("Concluído",))
+    db.execute('SELECT nome, tradicional, recheado, mini, valor_total, data_pedido FROM pedidos WHERE status = (?)', ("Concluído",))
     ultimas_vendas = db.fetchall()
-    return render_template("vendas.html", ultimas_vendas=ultimas_vendas)
+    db.execute('''SELECT SUM(valor_total) AS soma_valor, 
+               COUNT(*) AS num_pedidos, 
+               AVG(valor_total) AS ticket,
+               SUM(tradicional + recheado + mini) AS num_produtos FROM pedidos WHERE status = (?)''', ("Concluído",))
+    data_cards = db.fetchall()
+    return render_template("vendas.html", ultimas_vendas=ultimas_vendas, data_cards=data_cards)
 
 @app.route("/pedidos", methods=["GET"])
 def pedidos():
     db.execute('SELECT COUNT(*) as num_pedidos FROM pedidos WHERE status = (?)', ("Em andamento",))
     num_pedidos = int(db.fetchone()[0])
-    db.execute('SELECT id, nome, whatsapp, tradicional, recheado, mini, valor_total FROM pedidos WHERE status = (?)', ("Em andamento",))
+    db.execute('SELECT id, nome, whatsapp, tradicional, recheado, mini, valor_total, data_pedido FROM pedidos WHERE status = (?)', ("Em andamento",))
     items = db.fetchall()
+    items = [list(item) for item in items]
+    for item in items:
+        item[7] = (datetime.now() - datetime.strptime(item[7], "%Y-%m-%d %H:%M:%S.%f")).total_seconds() / 60
     return render_template("pedidos.html", num_pedidos=num_pedidos, items=items)
     
 @app.route("/cancelar-pedido", methods=["POST"])
@@ -78,8 +88,8 @@ def inserirPedido():
         valor_total = produtos.get("tradicional", 0) * 8 + produtos.get("recheado", 0) * 10 + produtos.get("mini", 0) * 5
 
         db.execute('''INSERT INTO pedidos 
-                   (nome, whatsapp, tradicional, recheado, mini, valor_total, observacao, status) VALUES
-                   (?, ?, ?, ?, ?, ?, ?, ?)
+                   (nome, whatsapp, tradicional, recheado, mini, valor_total, observacao, data_pedido, status) VALUES
+                   (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ''', (
                         nome,
                         whatsapp,
@@ -88,6 +98,7 @@ def inserirPedido():
                         produtos.get("mini", 0),
                         valor_total,
                         observacao,
+                        datetime.now(),
                         "Em andamento"
                         )
                     )

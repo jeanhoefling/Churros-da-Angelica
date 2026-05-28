@@ -32,12 +32,14 @@ def index():
 def vendas():
     db.execute('SELECT nome, tradicional, recheado, mini, valor_total, data_pedido FROM pedidos WHERE status = (?)', ("Concluído",))
     ultimas_vendas = db.fetchall()
+    db.execute('SELECT SUM(tradicional), SUM(recheado), SUM(mini) FROM pedidos WHERE status = (?)', ("Concluído",))
+    unidades = db.fetchall()
     db.execute('''SELECT SUM(valor_total) AS soma_valor, 
                COUNT(*) AS num_pedidos, 
                AVG(valor_total) AS ticket,
                SUM(tradicional + recheado + mini) AS num_produtos FROM pedidos WHERE status = (?)''', ("Concluído",))
     data_cards = db.fetchall()
-    return render_template("vendas.html", ultimas_vendas=ultimas_vendas, data_cards=data_cards)
+    return render_template("vendas.html", ultimas_vendas=ultimas_vendas, unidades=unidades, data_cards=data_cards)
 
 @app.route("/pedidos", methods=["GET"])
 def pedidos():

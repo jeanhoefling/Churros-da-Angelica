@@ -10,9 +10,75 @@
     <header>
         {% include "menu.html" %}
     </header>
-    <body>
-        <h1>vendas</h1>
-    </body>
+    <main id="vendas-page">
+        <div id="header">
+            <div>
+                <h1>Relatório de Vendas</h1>
+                <h2>Acompanhe suas vendas e desempenho</h2>
+            </div>
+            <button id="btn-filtro">Filtrar</button>
+        </div>
+        <div id="cards">
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+                <div>
+                    <p>Total de Vendas</p>
+                    <p>R$ XXXX</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+                <div>
+                    <p>Pedidos</p>
+                    <p>XX</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+                <div>
+                    <p>Ticket Médio</p>
+                    <p>R$ XXXX</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+                <div>
+                    <p>Produtos Vendidos</p>
+                    <p>XXX</p>
+                </div>
+            </div>
+        </div>
+        <div id="grafico">
+            <p>Gráfico</p>
+            <div id="mais-vendidos">
+                <h3>Mais Vendidos</h3>
+                <div>
+                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}">
+                    <div>
+                        <h4>Churros Recheado</h4>
+                        <p>XX unidades</p>
+                    </div>
+                </div>
+                <div>
+                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}">
+                    <div>
+                        <h4>Churros Tradicional</h4>
+                        <p>XX unidades</p>
+                    </div>
+                </div>
+                <div>
+                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}">
+                    <div>
+                        <h4>Mini Churros</h4>
+                        <p>XX unidades</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ultimas-vendas">
+
+        </div>
+    </main>
     <footer>
         {% include "footer.html" %}
     </footer>

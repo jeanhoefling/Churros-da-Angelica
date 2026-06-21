@@ -1,7 +1,12 @@
-# Projeto Final CS50 - Introduction to Computer Science
-## Churros da Angélica - Sistema de Gestão de Pedidos e Vendas
+# Churros da Angélica - Sistema de Gestão de Pedidos e Vendas
 
-#### Description:
+##  Observações:
+
+Este projeto foi utilizado como projeto final do CS50 - Introduction to Computer Science. Nele aprendi HTML + CSS + JavaScript + Flask SEM o uso de IA para produzir o código (utilizei apenas na construção do gráfico da página de vendas e como forma de pesquisa), com o intuito de melhorar meus fundamentos de programação web, para que no futuro utilize a IA com maior eficiência e clareza na hora de produzir.
+
+---
+
+#### Descrição:
 
 Este projeto foi desenvolvido com o objetivo de facilitar a organização dos pedidos de uma pequena venda de churros, inspirado diretamente no trabalho da minha mãe. Antes do sistema, os pedidos eram anotados manualmente em papel, o que causava dificuldades de organização, perda de informações e falta de controle sobre vendas e histórico.
 

@@ -624,6 +624,7 @@ input[type="number"]::-webkit-inner-spin-button {
 #vendas-page #grafico {
     display: flex;
     margin-top: 3vh;
+    gap: 3%;
 }
 
 #vendas-page #grafico img {
@@ -653,6 +654,7 @@ input[type="number"]::-webkit-inner-spin-button {
     display: flex;
     flex-direction: row;
     margin-bottom: 1vh;
+    gap: 5%;
 }
 
 #vendas-page #grafico div div div{
@@ -738,6 +740,10 @@ input[type="number"]::-webkit-inner-spin-button {
 
 #vendas-page #header form input {
     margin-right: 2%;
+}
+
+#vendas-page .grafico {
+    width: 70%;
 }
 
 /* ANIMAÇÕES */

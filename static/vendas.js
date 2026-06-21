@@ -57,3 +57,42 @@ function createTodasVendas (pedidos) {
     }
     start.parentElement.querySelector('h3').textContent = "Todas as Vendas"
 }
+
+function criarGrafico(datas, valores) {
+
+    const canvas = document.getElementById("graficoVendas");
+
+    if (!canvas) return;
+
+    new Chart(canvas, {
+        type: "line",
+        data: {
+            labels: datas,
+            datasets: [{
+                data: valores,
+                borderColor: "#ff6b81",
+                backgroundColor: "rgba(255,107,129,0.15)",
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: "Faturamento (R$)"
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}

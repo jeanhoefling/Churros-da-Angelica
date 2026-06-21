@@ -34,29 +34,45 @@ def vendas():
     data_fim = request.args.get("data_fim")
 
     params = ["Concluído"]
-    query1 = 'SELECT nome, tradicional, recheado, mini, valor_total, data_pedido FROM pedidos WHERE status = ?'
-    query2 = 'SELECT SUM(tradicional), SUM(recheado), SUM(mini) FROM pedidos WHERE status = ?'
+    query_ultimas_vendas = 'SELECT nome, tradicional, recheado, mini, valor_total, data_pedido FROM pedidos WHERE status = ?'
+    query_mais_vendidos = 'SELECT SUM(tradicional), SUM(recheado), SUM(mini) FROM pedidos WHERE status = ?'
     query3 = 'SELECT SUM(valor_total) AS soma_valor, COUNT(*) AS num_pedidos, AVG(valor_total) AS ticket, SUM(tradicional + recheado + mini) AS num_produtos FROM pedidos WHERE status = ?'
+    query_graph = 'SELECT date(data_pedido), SUM(valor_total) FROM pedidos WHERE status = ?'
 
     if data_inicio:
         params.append(data_inicio)
-        query1 += ' AND date(data_pedido) >= ?'
-        query2 += ' AND date(data_pedido) >= ?'
+        query_ultimas_vendas += ' AND date(data_pedido) >= ?'
+        query_mais_vendidos += ' AND date(data_pedido) >= ?'
         query3 += ' AND date(data_pedido) >= ?'
+        query_graph += ' AND date(data_pedido) >= ?'
 
     if data_fim:
         params.append(data_fim)
-        query1 += ' AND date(data_pedido) <= ?'
-        query2 += ' AND date(data_pedido) <= ?'
+        query_ultimas_vendas += ' AND date(data_pedido) <= ?'
+        query_mais_vendidos += ' AND date(data_pedido) <= ?'
         query3 += ' AND date(data_pedido) <= ?'
+        query_graph += ' AND date(data_pedido) <= ?'
 
-    db.execute(query1, params)
+    query_graph += ' GROUP BY date(data_pedido) ORDER BY date(data_pedido)'
+
+    db.execute(query_ultimas_vendas, params)
     ultimas_vendas = db.fetchall()
-    db.execute(query2, params)
+    db.execute(query_mais_vendidos, params)
     unidades = db.fetchall()
     db.execute(query3, params)
     data_cards = db.fetchall()
-    return render_template("vendas.html", ultimas_vendas=ultimas_vendas, unidades=unidades, data_cards=data_cards, data_inicio=data_inicio, data_fim=data_fim)
+    db.execute(query_graph, params)
+    graph = db.fetchall()
+
+    datas_graph = [linha[0] for linha in graph]
+    datas_graph = [
+        f"{data[8:10]}/{data[5:7]}"
+        for data in datas_graph
+    ]
+
+    valores_graph = [linha[1] for linha in graph]
+
+    return render_template("vendas.html", ultimas_vendas=ultimas_vendas, unidades=unidades, data_cards=data_cards, data_inicio=data_inicio, data_fim=data_fim, datas_graph=datas_graph, valores_graph=valores_graph)
 
 @app.route("/pedidos", methods=["GET"])
 def pedidos():

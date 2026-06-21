@@ -55,7 +55,9 @@
             </div>
         </div>
         <div id="grafico">
-            <p>Gráfico</p>
+            <div class="grafico">
+                <canvas id="graficoVendas"></canvas>
+            </div>
             <div id="mais-vendidos">
                 <h3>Mais Vendidos</h3>
                 <div>
@@ -95,8 +97,10 @@
     <footer>
         {% include "footer.html" %}
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='vendas.js') }}"></script>
     <script>
+        criarGrafico({{ datas_graph | tojson }}, {{ valores_graph | tojson }})
         createUltimasVendas({{ ultimas_vendas | tojson }})
         document.querySelector("#btn-ultimas-vendas").addEventListener("click", function () {
             callCreate({{ ultimas_vendas | tojson }}, this);

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Churros da Angélica</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <header>
+        {% include "menu.html" %}
+    </header>
+    <main id="vendas-page">
+        <div id="header">
+            <div>
+                <h1>Relatório de Vendas</h1>
+                <h2>Acompanhe suas vendas e desempenho</h2>
+            </div>
+            <form action="/vendas" method="GET">
+                <label for="data_inicio">Data inicial</label>
+                <input type="date" name="data_inicio" id="data_inicio" value="{{ data_inicio }}">
+                <label for="data_fim">Data final</label>
+                <input type="date" name="data_fim" id="data_fim" value="{{ data_fim }}">
+                <button id="btn-filtro">Filtrar</button>
+            </form>
+        </div>
+        <div id="cards">
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+                <div>
+                    <p>Total de Vendas</p>
+                    <p>R$ {{ data_cards[0][0] or 0 }}.00</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+                <div>
+                    <p>Pedidos</p>
+                    <p>{{ data_cards[0][1] }}</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+                <div>
+                    <p>Ticket Médio</p>
+                    <p>R$ {{ "%.2f"|format(data_cards[0][2] or 0) }}</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+                <div>
+                    <p>Produtos Vendidos</p>
+                    <p>{{ data_cards[0][3] }}</p>
+                </div>
+            </div>
+        </div>
+        <div id="grafico">
+            <div class="grafico">
+                <canvas id="graficoVendas"></canvas>
+            </div>
+            <div id="mais-vendidos">
+                <h3>Mais Vendidos</h3>
+                <div>
+                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}">
+                    <div>
+                        <h4>Churros Tradicional</h4>
+                        <p>{{ unidades[0][0]}} Unidades</p>
+                    </div>
+                </div>
+                <div>
+                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}">
+                    <div>
+                        <h4>Futuras opções</h4>
+                        <p>{{ unidades[0][1]}} Unidades</p>
+                    </div>
+                </div>
+                <div>
+                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}">
+                    <div>
+                        <h4>Futuras opções</h4>
+                        <p>{{ unidades[0][2]}} Unidades</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ultimas-vendas">
+            <h3>Últimas Vendas</h3>
+            <div id="header-row">
+                <h4>Data</h4>
+                <h4>Cliente</h4>
+                <h4>Itens</h4>
+                <h4>Total</h4>
+            </div>
+            <button class="btn-1" id="btn-ultimas-vendas">Ver todas as Vendas</button>
+        </div>
+    </main>
+    <footer>
+        {% include "footer.html" %}
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='vendas.js') }}"></script>
+    <script>
+        criarGrafico({{ datas_graph | tojson }}, {{ valores_graph | tojson }})
+        createUltimasVendas({{ ultimas_vendas | tojson }})
+        document.querySelector("#btn-ultimas-vendas").addEventListener("click", function () {
+            callCreate({{ ultimas_vendas | tojson }}, this);
+        });
+    </script>
+</body>
+</html>

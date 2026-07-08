@@ -3,6 +3,7 @@
 ##  Observações:
 
 Este projeto é uma evolução do que foi utilizado como projeto final do CS50 - Introduction to Computer Science. Ainda pretendo fazer outras evoluções no projeto, como uma interface de admin, prepará-lo para futuro deploy, integração com api's de pagamento, etc... 
+
 A versão utilizada para o curso CS50x está no repositório https://github.com/jeanhoefling/Churros-da-Angelica-CS50, onde não utilizei IA para gerar código, com o objetivo de desenvolver minhas habilidades.
 
 ---

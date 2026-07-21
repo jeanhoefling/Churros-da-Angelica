@@ -35,23 +35,11 @@
                 <div id="itens">
                     <div id="itens-head">
                         <h4>Produto</h4>
+                        <h4>Sabor</h4>
                         <h4>Quantidade</h4>
                         <h4>Preço Unit.</h4>
                         <h4>Total</h4>
                         <h4>Excluir</h4>
-                    </div>
-                    <div class="itens-row">
-                        <select name="produtos[]">
-                            <option value="tradicional">Churros Tradicional</option>
-                        </select>
-                        <div class="div-quantidade">
-                            <button onclick="somar(this, -1)" type="button">-</button>
-                            <input type="number" name="quantidades[]" value="1" min="1">
-                            <button onclick="somar(this, 1)" type="button">+</button>
-                        </div>
-                        <p class="preco_unidade">R$ 7,00</p>
-                        <p class="preco_total">R$ 7,00</p>
-                        <a onclick="removeRow(this.parentElement)"><img src="{{ url_for('static', filename='/assets/excluir.png') }}"></a>
                     </div>
                 </div>
                 <div id="adicionar-total">
@@ -61,7 +49,7 @@
                             Total do Pedido:
                         </h3>
                         <p>
-                            R$ 7,00
+                            R$ 0,00
                         </p>
                     </div>
                 </div>
@@ -75,6 +63,8 @@
     <footer>
         {% include "footer.html" %}
     </footer>
+    <script>const produtos = {{ produtos | tojson }};</script>
+
     <script src="{{ url_for('static', filename='inserir-pedido.js') }}"></script>
 </body>
 </html>

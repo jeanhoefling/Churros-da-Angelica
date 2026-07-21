@@ -12,6 +12,9 @@
         <a href="/pedidos" class="{{ 'active' if request.path == '/pedidos' else ''}}">
             <img src="{{ url_for('static', filename='assets/pedidos.png') }}">Pedidos
         </a>
+        <a href="/admin" class="{{ 'active' if request.path == '/admin' else ''}}">
+            <img src="{{ url_for('static', filename='assets/pedidos.png') }}">Admin
+        </a>
     </div>
     <div id="whatsapp-menu">
         <a href="https://wa.me/55997009084" target="_blank"><img src="{{ url_for('static', filename='assets/Whatsapp.png') }}">Whatsapp</a>

@@ -15,7 +15,6 @@ db.execute('''CREATE TABLE IF NOT EXISTS pedidos (
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
             nome TEXT NOT NULL, 
             whatsapp TEXT, 
-            tradicional INTEGER,
             tele BOOLEAN,
             endereco TEXT,
             valor_total INTEGER,
@@ -24,11 +23,42 @@ db.execute('''CREATE TABLE IF NOT EXISTS pedidos (
             status TEXT)
            ''')
 
+db.execute('''CREATE TABLE IF NOT EXISTS produtos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            nome TEXT NOT NULL,
+            valor INTEGER NOT NULL,
+            sabor TEXT)
+           ''')
+
+db.execute('''CREATE TABLE IF NOT EXISTS pedido_produto (
+            pedido_id INTEGER,
+            produto_id INTEGER,
+            PRIMARY KEY (pedido_id, produto_id),
+            FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+            FOREIGN KEY (produto_id) REFERENCES produtos(id))
+           ''')
+
 conn.commit()
 
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    if request.method == "POST":
+        nome = request.form.get("nome")
+        sabor = request.form.get("sabor")
+        valor = int(request.form.get("valor"))
+
+        db.execute("INSERT INTO produtos (nome, valor, sabor) VALUES (?, ?, ?)", 
+                   (nome, valor, sabor if sabor else None))
+        
+        conn.commit()
+
+        return redirect("/admin")
+    else:
+        return render_template("admin.html")
 
 @app.route("/vendas")
 def vendas():
@@ -149,7 +179,28 @@ def inserirPedido():
 
         return render_template("inserir-pedido.html")
     else:
-        return render_template("inserir-pedido.html")
+        db.execute("SELECT * FROM produtos")
+        rows = db.fetchall()
+
+        produtos = {}
+
+        for id, nome, valor, sabor in rows:
+
+            if nome not in produtos:
+                produtos[nome] = {
+                    "nome": nome,
+                    "valor": valor,
+                    "id": id,
+                    "sabores": []
+                }
+
+            if sabor:
+                produtos[nome]["sabores"].append({
+                    "id": id,
+                    "nome": sabor
+                })
+
+        return render_template("inserir-pedido.html", produtos=list(produtos.values()))
     
 def abrir_browser():
     webbrowser.open("http://127.0.0.1:5000")

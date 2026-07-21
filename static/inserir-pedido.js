@@ -1,115 +1,170 @@
-// Inserir Pedido - Função para captar as novas rows inseridas pelo botão
-function captarNovosSelects () {
-    document.querySelectorAll('.itens-row select').forEach(select => {
-        select.addEventListener("change", () => {
-            let row = select.parentElement
-            let tag_preco_unidade = row.querySelector('.preco_unidade')
-            let preco_unidade = valores[select.value]
-            tag_preco_unidade.textContent = `R$ ${preco_unidade.toFixed(2)}`
-            atualizaTotal()
-        })
-    })
+function atualizarTotal(){
+
+    let total=0;
+
+    document.querySelectorAll(".itens-row")
+    .forEach(row=>{
+        const nomeProduto=row.querySelector(".produto").value;
+        const produto=produtos.find(p=>p.nome==nomeProduto);
+        const quantidade=parseInt(row.querySelector("input[type=number]").value
+        );
+
+        const subtotal=
+            quantidade*produto.valor;
+
+        row.querySelector(".preco_total")
+            .textContent=`R$ ${subtotal.toFixed(2)}`;
+
+        total+=subtotal;
+
+    });
+
+    if(document.querySelector("#tele").checked){
+        total+=TAXA_TELE;
+    }
+
+    totalPedido.textContent=`R$ ${total.toFixed(2)}`;
 }
 
-// Essa chamada é para pegar o elemento que já está por padrão na página
-captarNovosSelects()
+function atualizarLinha(row){
+    const nomeProduto =row.querySelector(".produto").value;
+    const produto =produtos.find(p=>p.nome==nomeProduto);
+    const saboresDiv =row.querySelector(".sabores");
 
-// Inserir Pedido - Adicionar Produto
-let produtos = 1
-const pedidos_itens = document.querySelector('#itens');
-const btn_pedidos_adicionar = document.querySelector('#btn_pedidos_adicionar')
-btn_pedidos_adicionar.addEventListener ("click", () => {
-    if (produtos < 3) {
-        pedidos_itens.insertAdjacentHTML ('beforeend', `
-            <div class="itens-row">
-            <select name="produtos[]">
-            <option value="tradicional">Churros Tradicional</option>
+    saboresDiv.innerHTML="";
+
+    // Possui sabores
+    if(produto.sabores.length){
+
+        let html=`<select name="produtos[]">`;
+
+        produto.sabores.forEach(s=>{
+            html+=`
+                <option value="${s.id}">
+                    ${s.nome}
+                </option>
+            `;
+        });
+
+        html+=`</select>`;
+
+        saboresDiv.innerHTML=html;
+    }
+
+    // Não possui sabores
+    else{
+        saboresDiv.innerHTML=`
+            <input
+                type="hidden"
+                name="produtos[]"
+                value="${produto.id}">
+        `;
+
+        saboresDiv.innerHTML+=`
+            <span>-</span>
+        `;
+
+    }
+
+    row.querySelector(".preco_unidade").textContent=`R$ ${produto.valor.toFixed(2)}`;
+
+    atualizarTotal();
+}
+
+const TAXA_TELE = 8;
+
+const itens = document.querySelector("#itens");
+const totalPedido = document.querySelector("#adicionar-total p");
+
+let optionsProdutos = "";
+
+produtos.forEach(produto => {
+    optionsProdutos += `
+        <option value="${produto.nome}">
+            ${produto.nome}
+        </option>
+    `;
+});
+
+
+function criarLinha(){
+    itens.insertAdjacentHTML("beforeend",`
+        <div class="itens-row">
+
+            <select class="produto">
+                ${optionsProdutos}
             </select>
+
+            <div class="sabores"></div>
+
             <div class="div-quantidade">
-            <button onclick="somar(this, -1)" type="button">-</button>
-            <input type="number" name="quantidades[]" value="1" min="1">
-            <button onclick="somar(this, 1)" type="button">+</button>
+                <button type="button" class="menos">-</button>
+
+                <input
+                    type="number"
+                    value="1"
+                    min="1"
+                    name="quantidades[]">
+
+                <button type="button" class="mais">+</button>
             </div>
-            <p class="preco_unidade">R$ 7,00</p>
-            <p class="preco_total">R$ 7,00</p>
-            <a onclick="removeRow(this.parentElement)"><img src="/static/assets/excluir.png"></a>
-            </div>
-    `)
-        produtos++
-    }
-    captarNovosSelects()
-    atualizaTotal()
+
+            <p class="preco_unidade"></p>
+
+            <p class="preco_total"></p>
+
+            <a class="remover">
+                <img src="/static/assets/excluir.png">
+            </a>
+
+        </div>
+    `);
+
+    const row = itens.lastElementChild;
+
+    row.querySelector(".produto").addEventListener("change",()=>atualizarLinha(row));
+
+    row.querySelector(".mais").addEventListener("click",()=>somar(row,1));
+
+    row.querySelector(".menos").addEventListener("click",()=>somar(row,-1));
+
+    row.querySelector(".remover").addEventListener("click",()=>{
+            row.remove();
+            atualizarTotal();
+        });
+
+    atualizarLinha(row);
+}
+
+function somar(row,valor){
+
+    const input=row.querySelector("input[type=number]");
+
+    let q=parseInt(input.value);
+
+    q+=valor;
+
+    if(q<1)
+        q=1;
+
+    input.value=q;
+
+    atualizarTotal();
+}
+
+document.querySelector("#btn_pedidos_adicionar").addEventListener("click",criarLinha);
+
+const tele=document.querySelector("#tele");
+const endereco=document.querySelector("#endereco-container");
+
+tele.addEventListener("change",()=>{
+    endereco.style.display=
+        tele.checked
+            ? "block"
+            : "none";
+
+    atualizarTotal();
+
 });
 
-
-// Botões + e - na página inserir pedidos
-function somar (btn, valor) {
-    const div_btn = btn.parentElement;
-    const input = div_btn.querySelector("input");
-    
-    let actual_valor = parseInt(input.value) || 1
-    let new_valor = actual_valor + valor;
-
-    if (new_valor < 1) {
-        new_valor = 1
-    }
-
-    input.value = new_valor
-
-    atualizaTotal()
-}
-
-
-// Preço unidade e preço total da página inserir pedidos
-
-const valores = {
-    tradicional: 7
-}
-
-const TAXA_TELE = 8
-
-function atualizaTotal () {
-    let valor_total_all_rows = 0
-    document.querySelectorAll('.itens-row').forEach(row => {
-        let preco_unidade = valores[row.querySelector('select').value]
-        let quantidade = parseInt(row.querySelector('input').value)
-        let preco_total = preco_unidade * quantidade
-        valor_total_all_rows += preco_total
-        let tag_preco_total = row.querySelector('.preco_total')
-        tag_preco_total.textContent = `R$ ${preco_total.toFixed(2)}`
-    })
-    document.querySelector('#adicionar-total p').textContent = `R$ ${valor_total_all_rows.toFixed(2)}`
-
-    const teleMarcado = document.getElementById("tele").checked
-
-    if (teleMarcado) {
-        valor_total_all_rows += TAXA_TELE
-    }
-
-    document.querySelector('#adicionar-total p').textContent = `R$ ${valor_total_all_rows.toFixed(2)}`
-}
-
-function removeRow (row) {
-    row.remove()
-    produtos--
-    atualizaTotal()
-}
-
-const teleCheckbox = document.getElementById("tele");
-const enderecoContainer = document.getElementById("endereco-container");
-
-teleCheckbox.addEventListener("change", () => {
-    if (teleCheckbox.checked) {
-        enderecoContainer.style.display = "block";
-    } else {
-        enderecoContainer.style.display = "none";
-    }
-
-    atualizaTotal()
-});
-
-document.querySelector("form").addEventListener("submit", () => {
-  if (!teleCheckbox.checked) {
-    document.querySelector("input[name='endereco']").value = "";
-  }
-});
+criarLinha();

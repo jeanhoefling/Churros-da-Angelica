@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <header>
+        {% include "menu.html" %}
+    </header>
+    <main>
+        <form action="/admin" method="POST">
+            <input type="text" name="nome" placeholder="Nome">
+            <input type="text" name="sabor" placeholder="Sabor">
+            <input type="number" name="valor" placeholder="Valor">
+            <button type="submit">Cadastrar</button>
+        </form>
+    </main>
+    <footer>
+        {% include "footer.html" %}
+    </footer>
+</body>
+</html>

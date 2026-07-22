@@ -3,23 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Admin - Churros da Angélica</title>
     <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
     <header>
         {% include "menu.html" %}
     </header>
-    <main>
-        <form action="/admin" method="POST">
-            <input type="text" name="nome" placeholder="Nome">
-            <input type="text" name="sabor" placeholder="Sabor">
-            <input type="number" name="valor" placeholder="Valor">
-            <button type="submit">Cadastrar</button>
-        </form>
+    <main id="admin-page">
+        <div id="admin-header">
+            <h1>Painel Admin</h1>
+            <h2>Cadastre e gerencie os produtos</h2>
+        </div>
+
+        <div id="admin-content">
+            <div id="cadastro-produto">
+                <h3>Novo Produto</h3>
+                <form action="/admin" method="POST">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" placeholder="Ex: Churros Tradicional" required>
+
+                    <label for="sabor">Sabor</label>
+                    <input type="text" id="sabor" name="sabor" placeholder="Opcional - deixe em branco se não houver">
+
+                    <label for="valor">Valor</label>
+                    <input type="number" id="valor" name="valor" placeholder="0" required>
+
+                    <button class="btn-1" type="submit">Cadastrar</button>
+                </form>
+            </div>
+
+            <div id="lista-produtos">
+                <h3>Produtos Cadastrados</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Sabor</th>
+                            <th>Valor</th>
+                            <th>Remover</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for produto in produtos %}
+                        <tr>
+                            <td data-label="Nome">{{ produto[1] }}</td>
+                            <td data-label="Sabor">{{ produto[2] or "-" }}</td>
+                            <td data-label="Valor">R$ {{ "%.2f"|format(produto[3]) }}</td>
+                            <td data-label="Remover">
+                                <form action="/remover-produto" method="POST" class="form-remover">
+                                    <input type="hidden" name="id_produto" value="{{ produto[0] }}">
+                                    <button type="submit" class="btn-remover">Remover</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" id="lista-vazia">Nenhum produto cadastrado</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
     <footer>
         {% include "footer.html" %}
     </footer>
+    <script src="{{ url_for('static', filename='admin.js') }}"></script>
 </body>
 </html>

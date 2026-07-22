@@ -33,6 +33,7 @@ db.execute('''CREATE TABLE IF NOT EXISTS produtos (
 db.execute('''CREATE TABLE IF NOT EXISTS pedido_produto (
             pedido_id INTEGER,
             produto_id INTEGER,
+            quantidade INTEGER NOT NULL,
             PRIMARY KEY (pedido_id, produto_id),
             FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
             FOREIGN KEY (produto_id) REFERENCES produtos(id))
@@ -51,14 +52,30 @@ def admin():
         sabor = request.form.get("sabor")
         valor = int(request.form.get("valor"))
 
-        db.execute("INSERT INTO produtos (nome, valor, sabor) VALUES (?, ?, ?)", 
+        db.execute("INSERT INTO produtos (nome, valor, sabor) VALUES (?, ?, ?)",
                    (nome, valor, sabor if sabor else None))
-        
+
         conn.commit()
 
         return redirect("/admin")
     else:
-        return render_template("admin.html")
+        db.execute("SELECT id, nome, sabor, valor FROM produtos ORDER BY nome, sabor")
+        produtos = db.fetchall()
+        return render_template("admin.html", produtos=produtos)
+
+@app.route("/remover-produto", methods=["POST"])
+def removerProduto():
+    id = request.form["id_produto"]
+
+    db.execute("SELECT COUNT(*) FROM pedido_produto WHERE produto_id = ?", (id,))
+    em_uso = db.fetchone()[0]
+
+    if em_uso > 0:
+        return "Este produto já foi usado em pedidos e não pode ser removido", 400
+
+    db.execute("DELETE FROM produtos WHERE id = ?", (id,))
+    conn.commit()
+    return redirect("/admin")
 
 @app.route("/vendas")
 def vendas():
@@ -66,73 +83,116 @@ def vendas():
     data_fim = request.args.get("data_fim")
 
     params = ["Concluído"]
-    query_ultimas_vendas = 'SELECT nome, tradicional, valor_total, data_pedido FROM pedidos WHERE status = ?'
-    query_mais_vendidos = 'SELECT SUM(tradicional) FROM pedidos WHERE status = ?'
-    query3 = 'SELECT SUM(valor_total) AS soma_valor, COUNT(*) AS num_pedidos, AVG(valor_total) AS ticket, SUM(tradicional) AS num_produtos FROM pedidos WHERE status = ?'
-    query_graph = 'SELECT date(data_pedido), SUM(valor_total) FROM pedidos WHERE status = ?'
+    filtro_data = ""
 
     if data_inicio:
+        filtro_data += " AND date(p.data_pedido) >= ?"
         params.append(data_inicio)
-        query_ultimas_vendas += ' AND date(data_pedido) >= ?'
-        query_mais_vendidos += ' AND date(data_pedido) >= ?'
-        query3 += ' AND date(data_pedido) >= ?'
-        query_graph += ' AND date(data_pedido) >= ?'
 
     if data_fim:
+        filtro_data += " AND date(p.data_pedido) <= ?"
         params.append(data_fim)
-        query_ultimas_vendas += ' AND date(data_pedido) <= ?'
-        query_mais_vendidos += ' AND date(data_pedido) <= ?'
-        query3 += ' AND date(data_pedido) <= ?'
-        query_graph += ' AND date(data_pedido) <= ?'
 
-    query_graph += ' GROUP BY date(data_pedido) ORDER BY date(data_pedido)'
-
-    db.execute(query_ultimas_vendas, params)
-    ultimas_vendas = db.fetchall()
-    db.execute(query_mais_vendidos, params)
-    unidades = db.fetchall()
-    db.execute(query3, params)
+    # Cards: total vendido, numero de pedidos, ticket medio
+    db.execute(f'''SELECT SUM(valor_total), COUNT(*), AVG(valor_total)
+                   FROM pedidos p WHERE status = ? {filtro_data}''', params)
     data_cards = db.fetchall()
-    db.execute(query_graph, params)
+
+    # Produtos vendidos (soma das quantidades)
+    db.execute(f'''SELECT SUM(pp.quantidade)
+                   FROM pedido_produto pp
+                   JOIN pedidos p ON p.id = pp.pedido_id
+                   WHERE p.status = ? {filtro_data}''', params)
+    produtos_vendidos = db.fetchone()[0] or 0
+
+    # Mais vendidos (agrupado por nome do produto, juntando sabores)
+    db.execute(f'''SELECT pr.nome, SUM(pp.quantidade) as total
+                   FROM pedido_produto pp
+                   JOIN pedidos p ON p.id = pp.pedido_id
+                   JOIN produtos pr ON pr.id = pp.produto_id
+                   WHERE p.status = ? {filtro_data}
+                   GROUP BY pr.nome
+                   ORDER BY total DESC
+                   LIMIT 3''', params)
+    mais_vendidos = db.fetchall()
+
+    # Gráfico: faturamento por dia
+    db.execute(f'''SELECT date(p.data_pedido), SUM(p.valor_total)
+                   FROM pedidos p
+                   WHERE p.status = ? {filtro_data}
+                   GROUP BY date(p.data_pedido)
+                   ORDER BY date(p.data_pedido)''', params)
     graph = db.fetchall()
 
-    datas_graph = [linha[0] for linha in graph]
-    datas_graph = [
-        f"{data[8:10]}/{data[5:7]}"
-        for data in datas_graph
-    ]
-
+    datas_graph = [f"{linha[0][8:10]}/{linha[0][5:7]}" for linha in graph]
     valores_graph = [linha[1] for linha in graph]
 
-    return render_template("vendas.html", ultimas_vendas=ultimas_vendas, unidades=unidades, data_cards=data_cards, data_inicio=data_inicio, data_fim=data_fim, datas_graph=datas_graph, valores_graph=valores_graph)
+    # Últimas vendas (itens já formatados em uma string)
+    db.execute(f'''SELECT p.id, p.nome, p.valor_total, p.data_pedido,
+                   GROUP_CONCAT(pp.quantidade || 'x ' || pr.nome ||
+                       CASE WHEN pr.sabor IS NOT NULL THEN ' (' || pr.sabor || ')' ELSE '' END, ', ') as itens
+                   FROM pedidos p
+                   JOIN pedido_produto pp ON pp.pedido_id = p.id
+                   JOIN produtos pr ON pr.id = pp.produto_id
+                   WHERE p.status = ? {filtro_data}
+                   GROUP BY p.id
+                   ORDER BY p.data_pedido''', params)
+    ultimas_vendas = db.fetchall()
+
+    return render_template("vendas.html",
+                           ultimas_vendas=ultimas_vendas,
+                           mais_vendidos=mais_vendidos,
+                           produtos_vendidos=produtos_vendidos,
+                           data_cards=data_cards,
+                           data_inicio=data_inicio,
+                           data_fim=data_fim,
+                           datas_graph=datas_graph,
+                           valores_graph=valores_graph)
 
 @app.route("/pedidos", methods=["GET"])
 def pedidos():
-    db.execute('SELECT COUNT(*) as num_pedidos FROM pedidos WHERE status = (?)', ("Em andamento",))
-    num_pedidos = int(db.fetchone()[0])
-    db.execute('SELECT id, nome, whatsapp, tradicional, valor_total, tele, endereco, data_pedido FROM pedidos WHERE status = (?)', ("Em andamento",))
-    items = db.fetchall()
-    items = [list(item) for item in items]
-    for item in items:
-        item[7] = (datetime.now() - datetime.strptime(item[7], "%Y-%m-%d %H:%M:%S.%f")).total_seconds() / 60
-    return render_template("pedidos.html", num_pedidos=num_pedidos, items=items)
-    
+    db.execute('SELECT id, nome, whatsapp, valor_total, tele, endereco, data_pedido FROM pedidos WHERE status = ?',
+               ("Em andamento",))
+    pedidos_rows = db.fetchall()
+
+    items = []
+    for pid, nome, whatsapp, valor_total, tele, endereco, data_pedido in pedidos_rows:
+        db.execute('''SELECT pr.nome, pr.sabor, pp.quantidade
+                      FROM pedido_produto pp
+                      JOIN produtos pr ON pr.id = pp.produto_id
+                      WHERE pp.pedido_id = ?''', (pid,))
+        produtos_pedido = db.fetchall()
+
+        tempo = (datetime.now() - datetime.strptime(data_pedido, "%Y-%m-%d %H:%M:%S.%f")).total_seconds() / 60
+
+        items.append({
+            "id": pid,
+            "nome": nome,
+            "whatsapp": whatsapp,
+            "valor_total": valor_total,
+            "tele": bool(tele),
+            "endereco": endereco,
+            "tempo": tempo,
+            "produtos": [{"nome": n, "sabor": s, "quantidade": q} for n, s, q in produtos_pedido]
+        })
+
+    return render_template("pedidos.html", items=items)
+
 @app.route("/cancelar-pedido", methods=["POST"])
 def cancelarPedido():
-    if request.method == "POST":
-        id = request.form["id_pedido"]
-        db.execute('DELETE FROM pedidos WHERE id = ?', (id,))
-        conn.commit()
-        return redirect("/pedidos")
-    
+    id = request.form["id_pedido"]
+    db.execute('DELETE FROM pedido_produto WHERE pedido_id = ?', (id,))
+    db.execute('DELETE FROM pedidos WHERE id = ?', (id,))
+    conn.commit()
+    return redirect("/pedidos")
+
 @app.route("/concluir-pedido", methods=["POST"])
 def concluirPedido():
-    if request.method == "POST":
-        id = request.form["id_pedido"]
-        db.execute('UPDATE pedidos SET status = ? WHERE id = ?', ("Concluído", id))
-        conn.commit()
-        return redirect("/pedidos")
-    
+    id = request.form["id_pedido"]
+    db.execute('UPDATE pedidos SET status = ? WHERE id = ?', ("Concluído", id))
+    conn.commit()
+    return redirect("/pedidos")
+
 @app.route("/inserir-pedido", methods=["GET", "POST"])
 def inserirPedido():
     if request.method == "POST":
@@ -140,7 +200,7 @@ def inserirPedido():
         nome = request.form["nome"]
         if not nome.strip():
             return "Nome é obrigatório", 400
-        
+
         whatsapp = request.form["whatsapp"].strip()
         if whatsapp and (len(whatsapp) != 11 or not whatsapp.isdigit()):
             return "Formato de whatsapp inválido", 400
@@ -149,35 +209,52 @@ def inserirPedido():
         tele = "tele" in request.form
         endereco = request.form.get("endereco", "").strip()
 
-        produtos = {}
-        produtos_lista = request.form.getlist("produtos[]")
+        produtos_ids = request.form.getlist("produtos[]")
         quantidades_lista = request.form.getlist("quantidades[]")
-        for i in range (len(produtos_lista)):
-            produtos[produtos_lista[i]] = int(quantidades_lista[i])
 
-        valor_total = produtos.get("tradicional", 0) * 7
+        if not produtos_ids:
+            return "Pedido deve conter ao menos um produto", 400
+
+        # agrupa caso o mesmo produto apareça em mais de uma linha
+        itens = {}
+        for produto_id, quantidade in zip(produtos_ids, quantidades_lista):
+            produto_id = int(produto_id)
+            quantidade = int(quantidade)
+            itens[produto_id] = itens.get(produto_id, 0) + quantidade
+
+        placeholders = ",".join("?" * len(itens))
+        db.execute(f"SELECT id, valor FROM produtos WHERE id IN ({placeholders})", list(itens.keys()))
+        precos = dict(db.fetchall())
+
+        valor_total = sum(precos.get(pid, 0) * qtd for pid, qtd in itens.items())
 
         if tele:
             valor_total += 8
 
         db.execute('''INSERT INTO pedidos 
-                   (nome, whatsapp, tradicional, valor_total, tele, endereco, observacao, data_pedido, status) VALUES
-                   (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                   (nome, whatsapp, tele, endereco, valor_total, observacao, data_pedido, status) VALUES
+                   (?, ?, ?, ?, ?, ?, ?, ?)
                     ''', (
                         nome,
                         whatsapp,
-                        produtos.get("tradicional", 0),
-                        valor_total,
                         int(tele),
                         endereco if tele else None,
+                        valor_total,
                         observacao,
                         datetime.now(),
                         "Em andamento"
                         )
                     )
+
+        pedido_id = db.lastrowid
+
+        for produto_id, quantidade in itens.items():
+            db.execute('INSERT INTO pedido_produto (pedido_id, produto_id, quantidade) VALUES (?, ?, ?)',
+                       (pedido_id, produto_id, quantidade))
+
         conn.commit()
 
-        return render_template("inserir-pedido.html")
+        return redirect("/pedidos")
     else:
         db.execute("SELECT * FROM produtos")
         rows = db.fetchall()
@@ -201,7 +278,7 @@ def inserirPedido():
                 })
 
         return render_template("inserir-pedido.html", produtos=list(produtos.values()))
-    
+
 def abrir_browser():
     webbrowser.open("http://127.0.0.1:5000")
 

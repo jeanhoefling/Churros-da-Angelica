@@ -10,52 +10,38 @@ function callCreate (pedidos, btn) {
 }
 
 function createUltimasVendas (pedidos) {
-    document.querySelectorAll('#ultimas-vendas .row').forEach((element) => {
-        element.remove()
-    })
-    const start = document.querySelector('#vendas-page #header-row')
-    let pedidos_num = pedidos.length
-    if (pedidos_num >= 4) {
-        pedidos_num = 4
-    }
-    for (let i = 1; i <= pedidos_num; i++) {
-        let dataStr = pedidos[pedidos.length - i][3].split(" ")[0]
-        let ano = dataStr.slice(2, 4)
-        let mes = dataStr.slice(5, 7)
-        let dia = dataStr.slice(8, 10)
-        start.insertAdjacentHTML('afterend', `
-                <div class="row">
-                <p>${dia}/ ${mes}/${ano}</p>
-                <p>${pedidos[pedidos.length - i][0]}</p>
-                <p>${pedidos[pedidos.length - i][1]}x Tradicional</p>
-                <p>R$ ${pedidos[pedidos.length - i][2]},00</p>
-                </div>
-            `)
-    }
-    start.parentElement.querySelector('h3').textContent = "Últimas Vendas"
+    renderVendas(pedidos, 4)
+    document.querySelector('#ultimas-vendas h3').textContent = "Últimas Vendas"
 }
 
 function createTodasVendas (pedidos) {
+    renderVendas(pedidos, pedidos.length)
+    document.querySelector('#ultimas-vendas h3').textContent = "Todas as Vendas"
+}
+
+function renderVendas (pedidos, limite) {
     document.querySelectorAll('#ultimas-vendas .row').forEach((element) => {
         element.remove()
     })
     const start = document.querySelector('#vendas-page #header-row')
-    let pedidos_num = pedidos.length
-    for (let i = 1; i <= pedidos_num; i++) {
-        let dataStr = pedidos[pedidos.length - i][3].split(" ")[0]
-        let ano = dataStr.slice(2, 4)
-        let mes = dataStr.slice(5, 7)
-        let dia = dataStr.slice(8, 10)
+    const num = Math.min(pedidos.length, limite)
+
+    for (let i = 1; i <= num; i++) {
+        const pedido = pedidos[pedidos.length - i]
+        const dataStr = pedido[3].split(" ")[0]
+        const ano = dataStr.slice(2, 4)
+        const mes = dataStr.slice(5, 7)
+        const dia = dataStr.slice(8, 10)
+
         start.insertAdjacentHTML('afterend', `
                 <div class="row">
-                <p>${dia}/ ${mes}/${ano}</p>
-                <p>${pedidos[pedidos.length - i][0]}</p>
-                <p>${pedidos[pedidos.length - i][1]}x Tradicional</p>
-                <p>R$ ${pedidos[pedidos.length - i][2]},00</p>
+                <p>${dia}/${mes}/${ano}</p>
+                <p>${pedido[1]}</p>
+                <p>${pedido[4]}</p>
+                <p>R$ ${pedido[2]},00</p>
                 </div>
             `)
     }
-    start.parentElement.querySelector('h3').textContent = "Todas as Vendas"
 }
 
 function criarGrafico(datas, valores) {

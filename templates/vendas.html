@@ -50,7 +50,7 @@
                 <img src="{{ url_for('static', filename='assets/coracao.png') }}">
                 <div>
                     <p>Produtos Vendidos</p>
-                    <p>{{ data_cards[0][3] }}</p>
+                    <p>{{ produtos_vendidos }}</p>
                 </div>
             </div>
         </div>
@@ -60,27 +60,17 @@
             </div>
             <div id="mais-vendidos">
                 <h3>Mais Vendidos</h3>
+                {% for produto in mais_vendidos %}
                 <div>
                     <img src="{{ url_for('static', filename='assets/churros-card.png') }}">
                     <div>
-                        <h4>Churros Tradicional</h4>
-                        <p>{{ unidades[0][0]}} Unidades</p>
+                        <h4>{{ produto[0] }}</h4>
+                        <p>{{ produto[1] }} Unidades</p>
                     </div>
                 </div>
-                <div>
-                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}">
-                    <div>
-                        <h4>Futuras opções</h4>
-                        <p>{{ unidades[0][1]}} Unidades</p>
-                    </div>
-                </div>
-                <div>
-                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}">
-                    <div>
-                        <h4>Futuras opções</h4>
-                        <p>{{ unidades[0][2]}} Unidades</p>
-                    </div>
-                </div>
+                {% else %}
+                <p>Nenhuma venda registrada</p>
+                {% endfor %}
             </div>
         </div>
         <div id="ultimas-vendas">
@@ -105,6 +95,7 @@
         document.querySelector("#btn-ultimas-vendas").addEventListener("click", function () {
             callCreate({{ ultimas_vendas | tojson }}, this);
         });
+    </script>
     </script>
 </body>
 </html>

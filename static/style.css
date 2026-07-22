@@ -2300,3 +2300,208 @@ footer a:hover, footer p:hover {
         justify-content: center;
     }
 }
+
+/* ===== Admin ===== */
+
+#admin-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+}
+
+#admin-header h1 {
+    font-family: var(--font-heading, 'Fraunces', serif);
+    color: var(--cinnamon-brown, #6b3d1f);
+    font-size: 2rem;
+    margin-bottom: 4px;
+}
+
+#admin-header h2 {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    color: var(--text-muted, #8a7566);
+    font-weight: 400;
+    font-size: 1rem;
+    margin-bottom: 32px;
+}
+
+#admin-content {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* Formulário de cadastro */
+#cadastro-produto {
+    background: var(--cream, #fdf6ee);
+    border: 1px solid var(--border-soft, #ecdfd1);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+#cadastro-produto h3 {
+    font-family: var(--font-heading, 'Fraunces', serif);
+    color: var(--cinnamon-brown, #6b3d1f);
+    font-size: 1.15rem;
+    margin-bottom: 16px;
+}
+
+#cadastro-produto form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#cadastro-produto label {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: 0.85rem;
+    color: var(--text-muted, #8a7566);
+    margin-top: 10px;
+}
+
+#cadastro-produto input {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    padding: 10px 12px;
+    border: 1px solid var(--border-soft, #ecdfd1);
+    border-radius: 10px;
+    background: #fff;
+    font-size: 0.95rem;
+}
+
+#cadastro-produto input:focus {
+    outline: none;
+    border-color: var(--caramel-gold, #c98a3c);
+}
+
+#cadastro-produto button {
+    margin-top: 20px;
+}
+
+/* Botão padrão já existente (.btn-1) deve cobrir o estilo do submit,
+   caso não exista no projeto, fallback abaixo: */
+.btn-1 {
+    background: var(--caramel-gold, #c98a3c);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-1:hover {
+    background: var(--cinnamon-brown, #6b3d1f);
+}
+
+/* Lista/tabela de produtos */
+#lista-produtos {
+    background: #fff;
+    border: 1px solid var(--border-soft, #ecdfd1);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+#lista-produtos h3 {
+    font-family: var(--font-heading, 'Fraunces', serif);
+    color: var(--cinnamon-brown, #6b3d1f);
+    font-size: 1.15rem;
+    margin-bottom: 16px;
+}
+
+#lista-produtos table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body, 'Inter', sans-serif);
+}
+
+#lista-produtos thead th {
+    text-align: left;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-muted, #8a7566);
+    border-bottom: 2px solid var(--border-soft, #ecdfd1);
+    padding: 10px 12px;
+}
+
+#lista-produtos tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-soft, #ecdfd1);
+    font-size: 0.95rem;
+    color: #3d2b1f;
+}
+
+#lista-produtos tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#lista-produtos tbody tr:hover {
+    background: var(--cream, #fdf6ee);
+}
+
+#lista-vazia {
+    text-align: center;
+    color: var(--text-muted, #8a7566);
+    padding: 24px;
+}
+
+.btn-remover {
+    background: transparent;
+    border: 1px solid #c65b4a;
+    color: #c65b4a;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-remover:hover {
+    background: #c65b4a;
+    color: #fff;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    #admin-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile: tabela vira lista de cards */
+@media (max-width: 600px) {
+    #lista-produtos table thead {
+        display: none;
+    }
+
+    #lista-produtos table, 
+    #lista-produtos tbody, 
+    #lista-produtos tr, 
+    #lista-produtos td {
+        display: block;
+        width: 100%;
+    }
+
+    #lista-produtos tbody tr {
+        border: 1px solid var(--border-soft, #ecdfd1);
+        border-radius: 12px;
+        margin-bottom: 12px;
+        padding: 8px 12px;
+    }
+
+    #lista-produtos tbody td {
+        border-bottom: none;
+        padding: 6px 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #lista-produtos tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--text-muted, #8a7566);
+    }
+}

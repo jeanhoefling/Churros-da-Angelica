@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   BASE
+   ============================================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-body text-marrom-texto bg-white leading-relaxed overflow-x-hidden;
+  }
+
+  img {
+    @apply block max-w-full;
+  }
+
+  button {
+    @apply font-body cursor-pointer transition duration-200;
+  }
+
+  input,
+  select {
+    @apply font-body text-base border border-borda outline-offset-2;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading text-marrom-texto font-bold;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-rosa-escuro outline-offset-2;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+/* =============================================
+   COMPONENTES
+   Classes usadas por pedidos.js, vendas.js e
+   inserir-pedido.js (mantidas p/ não quebrar o JS)
+   ============================================= */
+@layer components {
+
+  /* Botão principal, usado em várias páginas */
+  .btn-1 {
+    @apply bg-rosa text-white border-2 border-rosa rounded-md font-bold tracking-wide
+           transition duration-200 hover:bg-rosa-escuro hover:border-rosa-escuro
+           hover:-translate-y-0.5 hover:shadow-brand-sm;
+  }
+
+  .btn-remover {
+    @apply bg-transparent border border-[#c65b4a] text-[#c65b4a] rounded-lg px-3.5 py-1.5
+           text-sm transition duration-200 hover:bg-[#c65b4a] hover:text-white;
+  }
+
+  /* ---------- PEDIDOS (cards gerados por pedidos.js) ---------- */
+  #pedidos-page .cards-row {
+    @apply flex flex-wrap justify-start gap-[3%] mt-6 md:gap-[2%];
+  }
+
+  #pedidos-page .card {
+    @apply flex flex-col w-[22.5%] min-h-[370px] p-[3%] bg-white border border-borda
+           rounded-xl shadow-brand-sm transition duration-200
+           hover:-translate-y-1 hover:shadow-brand-md
+           lg:w-[22.5%] md:w-[31%] md:min-h-[300px] max-md:w-full max-md:min-h-[300px];
+  }
+
+  #pedidos-page .card > div:first-child {
+    @apply flex flex-row justify-between items-center;
+  }
+
+  #pedidos-page .card h3 {
+    @apply text-base font-bold;
+  }
+
+  #pedidos-page .card > div:first-child p {
+    @apply text-sm bg-fundo-claro text-rosa-escuro font-bold px-3 py-0.5 rounded-full;
+  }
+
+  #pedidos-page .card h4 {
+    @apply text-xl mt-2 font-bold;
+  }
+
+  #pedidos-page .card ul {
+    @apply list-none pl-0 my-2;
+  }
+
+  #pedidos-page .card li {
+    @apply text-sm py-0.5 text-[#6b5a4e];
+  }
+
+  #pedidos-page .card li:last-child {
+    @apply font-bold text-marrom-texto;
+  }
+
+  #pedidos-page .card .div-whatsapp {
+    @apply flex flex-row justify-start items-center gap-[3%] mt-auto;
+  }
+
+  #pedidos-page .card .div-whatsapp a {
+    @apply w-fit h-fit;
+  }
+
+  #pedidos-page .card .div-whatsapp img {
+    @apply w-6 h-6;
+  }
+
+  #pedidos-page .card form {
+    @apply w-full;
+  }
+
+  #pedidos-page .card form:nth-of-type(1) button {
+    @apply mt-3 py-2.5 rounded-md w-full;
+  }
+
+  #pedidos-page .card form:nth-of-type(2) button {
+    @apply w-full mt-2 py-2.5 bg-transparent text-[#948578] border border-[#c9beb3]
+           rounded-md font-semibold transition duration-200
+           hover:bg-[#ffecec] hover:text-[#c0392b] hover:border-[#c0392b];
+  }
+
+  /* ---------- INSERIR PEDIDO (linhas geradas por inserir-pedido.js) ---------- */
+  #inserir-pedido-page .itens-row {
+    @apply flex items-center flex-wrap gap-x-[3%] gap-y-3 p-[1.4vh_1.5%] border border-t-0
+           border-borda bg-white transition duration-200 hover:bg-[#fbf6f0]
+           max-md:rounded-md max-md:border-t max-md:mt-3;
+  }
+
+  #inserir-pedido-page .itens-row .produto {
+    @apply cursor-pointer mr-[10%] w-1/5 px-[0.5%] py-2 rounded-md max-md:w-full max-md:mr-0;
+  }
+
+  #inserir-pedido-page .itens-row .sabores select {
+    @apply cursor-pointer rounded-md px-2 py-2;
+  }
+
+  #inserir-pedido-page .itens-row .preco_unidade {
+    @apply w-fit font-bold max-md:flex-1;
+  }
+
+  #inserir-pedido-page .itens-row .preco_total {
+    @apply w-1/4 font-bold text-rosa-escuro max-md:flex-1;
+  }
+
+  #inserir-pedido-page .div-quantidade {
+    @apply flex items-center w-[12%] mr-[13%] max-md:w-2/5 max-md:mr-0;
+  }
+
+  #inserir-pedido-page .div-quantidade button {
+    @apply w-8 h-8 border border-borda bg-fundo-claro text-marrom-texto font-bold rounded-md
+           transition duration-200 hover:bg-rosa hover:text-white hover:border-rosa;
+  }
+
+  #inserir-pedido-page .div-quantidade input {
+    @apply w-11 text-center mx-1;
+  }
+
+  #inserir-pedido-page .remover {
+    @apply flex-1 text-right max-md:flex-none max-md:ml-auto;
+  }
+
+  #inserir-pedido-page .remover img {
+    @apply w-[22px] h-[22px] ml-auto opacity-75 transition duration-200
+           hover:scale-110 hover:opacity-100 cursor-pointer;
+  }
+
+  /* ---------- VENDAS (linhas geradas por vendas.js) ---------- */
+  #vendas-page #ultimas-vendas .row {
+    @apply flex items-center bg-white border-b border-fundo-claro px-[2%] py-[1.2vh]
+           transition duration-200 hover:bg-fundo-claro
+           max-md:flex-col max-md:items-start max-md:gap-1 max-md:border max-md:border-borda
+           max-md:rounded-md max-md:mt-3 max-md:px-[4%] max-md:py-3;
+  }
+
+  #vendas-page #ultimas-vendas .row p {
+    @apply text-sm max-md:w-full;
+  }
+
+  #vendas-page #ultimas-vendas .row p:nth-of-type(1) {
+    @apply w-[15%] text-[#6b5a4e];
+  }
+
+  #vendas-page #ultimas-vendas .row p:nth-of-type(2) {
+    @apply w-1/5 font-bold;
+  }
+
+  #vendas-page #ultimas-vendas .row p:nth-of-type(3) {
+    @apply w-1/2 text-[#6b5a4e];
+  }
+
+  #vendas-page #ultimas-vendas .row p:nth-of-type(4) {
+    @apply w-[15%] font-bold text-rosa-escuro;
+  }
+
+  #vendas-page #ultimas-vendas .row p:nth-of-type(1)::before {
+    @apply max-md:content-['Data:_'] max-md:font-bold max-md:text-rosa-escuro;
+  }
+
+  #vendas-page #ultimas-vendas .row p:nth-of-type(2)::before {
+    @apply max-md:content-['Cliente:_'] max-md:font-bold max-md:text-rosa-escuro;
+  }
+
+  #vendas-page #ultimas-vendas .row p:nth-of-type(3)::before {
+    @apply max-md:content-['Itens:_'] max-md:font-bold max-md:text-rosa-escuro;
+  }
+
+  #vendas-page #ultimas-vendas .row p:nth-of-type(4)::before {
+    @apply max-md:content-['Total:_'] max-md:font-bold max-md:text-rosa-escuro;
+  }
+
+  /* Aparição do menu e revelação de seções ao rolar (usado por script.js) */
+  .section-hidden {
+    @apply opacity-0 transition-all duration-500 ease-in-out;
+  }
+
+  .section-show {
+    @apply opacity-100;
+  }
+}

@@ -4,63 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Churros da Angélica</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/output.css') }}">
 </head>
 <body>
-    <header>
+    <header class="min-h-[15vh] bg-marrom-escuro flex animate-aparecer max-md:min-h-0 max-md:py-6">
         {% include "menu.html" %}
     </header>
-    <main id="inserir-pedido-page">
-        <h1>Novo Pedido</h1>
-        <h2>Adicione um novo pedido</h2>
-        <form action="/inserir-pedido" method="POST">
-            <div id="dados-cliente">
-                <h3>Dados do Cliente</h3>
-                <h4>Nome</h4>
-                <input name="nome" placeholder="Nome do cliente" type="text" required>
-                <h4>Whatsapp</h4>
-                <input name="whatsapp" placeholder="55900001111" type="text">
-                <h4>Tele</h4>
-                    <input type="checkbox" name="tele" id="tele">
-                </h4>
+    <main id="inserir-pedido-page" class="bg-fundo-claro px-[3%] pt-[3vh] pb-[4vh] max-md:px-[4%] max-md:pt-[3vh] max-md:pb-[4vh]">
+        <h1 class="text-[1.7rem] md:text-[2rem] lg:text-[2.25rem]">Novo Pedido</h1>
+        <h2 class="text-[1.25rem] text-[#6b5a4e] font-semibold mt-2">Adicione um novo pedido</h2>
+        <form action="/inserir-pedido" method="POST" class="flex flex-wrap gap-[2%] mt-4 max-md:flex-col max-md:gap-6">
+
+            <div id="dados-cliente" class="w-[30%] p-[3%_4%] bg-white border border-borda rounded-lg shadow-brand-sm h-fit max-md:w-full">
+                <h3 class="text-[1.5rem] mt-2">Dados do Cliente</h3>
+
+                <h4 class="text-base mt-4">Nome</h4>
+                <input name="nome" placeholder="Nome do cliente" type="text" required
+                       class="w-full mt-1 py-[1.4vh] px-[3%] rounded-md border-borda focus:border-rosa focus:outline-none">
+
+                <h4 class="text-base mt-4">Whatsapp</h4>
+                <input name="whatsapp" placeholder="55900001111" type="text"
+                       class="w-full mt-1 py-[1.4vh] px-[3%] rounded-md border-borda focus:border-rosa focus:outline-none">
+
+                <h4 class="text-base mt-4">Tele</h4>
+                <input type="checkbox" name="tele" id="tele" class="mt-2">
+
                 <div id="endereco-container" style="display: none;">
-                    <h4>Endereço</h4>
-                    <input type="text" name="endereco" placeholder="Rua, número, bairro...">
+                    <h4 class="text-base mt-4">Endereço</h4>
+                    <input type="text" name="endereco" placeholder="Rua, número, bairro..."
+                           class="w-full mt-1 py-[1.4vh] px-[3%] rounded-md border-borda focus:border-rosa focus:outline-none">
                 </div>
-                <h4>Observação</h4>
-                <input name="observacao" type="text">
+
+                <h4 class="text-base mt-4">Observação</h4>
+                <input name="observacao" type="text"
+                       class="w-full mt-1 py-[1.4vh] px-[3%] rounded-md border-borda focus:border-rosa focus:outline-none">
             </div>
-            <div id="dados-pedido">
-                <h3>Itens do Pedido</h3>
-                <div id="itens">
-                    <div id="itens-head">
-                        <h4>Produto</h4>
-                        <h4>Sabor</h4>
-                        <h4>Quantidade</h4>
-                        <h4>Preço Unit.</h4>
-                        <h4>Total</h4>
-                        <h4>Excluir</h4>
+
+            <div id="dados-pedido" class="flex flex-col w-[70%] p-[3%] bg-white border border-borda rounded-lg shadow-brand-sm max-md:w-full">
+                <h3 class="text-[1.5rem] mt-2">Itens do Pedido</h3>
+
+                <div id="itens" class="mt-4">
+                    <div id="itens-head" class="flex px-[1.5%] py-[1vh] bg-fundo-claro border border-borda rounded-t-md max-md:hidden">
+                        <h4 class="mt-0 text-[#6b5a4e] w-[30%]">Produto</h4>
+                        <h4 class="mt-0 text-[#6b5a4e] w-1/4">Sabor</h4>
+                        <h4 class="mt-0 text-[#6b5a4e] w-1/4">Quantidade</h4>
+                        <h4 class="mt-0 text-[#6b5a4e] w-fit">Preço Unit.</h4>
+                        <h4 class="mt-0 text-[#6b5a4e] flex-1 text-right">Total</h4>
                     </div>
                 </div>
-                <div id="adicionar-total">
-                    <button type="button" id="btn_pedidos_adicionar">+ Adicionar produto</button>
-                    <div>
-                        <h3>
-                            Total do Pedido:
-                        </h3>
-                        <p>
-                            R$ 0,00
-                        </p>
+
+                <div id="adicionar-total" class="flex items-center justify-between flex-wrap gap-4 mt-4">
+                    <button type="button" id="btn_pedidos_adicionar"
+                            class="py-[1.4vh] px-[4%] border-2 border-rosa rounded-md text-rosa bg-white font-bold transition duration-200 hover:bg-rosa hover:text-white max-md:w-full">
+                        + Adicionar produto
+                    </button>
+                    <div class="flex items-center gap-[3%] max-md:justify-between max-md:w-full">
+                        <h3 class="mt-0 text-[1.5rem]">Total do Pedido:</h3>
+                        <p class="text-[1.3rem] font-extrabold text-rosa-escuro">R$ 0,00</p>
                     </div>
                 </div>
-                <div id="div-salvar-pedido">
-                    <button type="button" onclick="location.reload()">Limpar</button>
-                    <button class="btn-1" type="submit">Salvar Pedido</button>
+
+                <div id="div-salvar-pedido" class="mt-auto pt-4 flex justify-end gap-[2%] flex-wrap max-md:flex-col-reverse">
+                    <button type="button" onclick="location.reload()"
+                            class="py-[1.6vh] px-[8%] bg-fundo-claro border-2 border-[#c9beb3] rounded-md text-marrom-texto font-semibold transition duration-200 hover:bg-[#e4ddd4] max-md:w-full">
+                        Limpar
+                    </button>
+                    <button class="btn-1 py-[1.6vh] px-[8%] max-md:w-full" type="submit">Salvar Pedido</button>
                 </div>
             </div>
         </form>
     </main>
-    <footer>
+    <footer class="bg-marrom-escuro">
         {% include "footer.html" %}
     </footer>
     <script>const produtos = {{ produtos | tojson }};</script>

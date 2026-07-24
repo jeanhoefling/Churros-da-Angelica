@@ -1,1 +1,7 @@
 churros.db
+node_modules/
+
+__pycache__/
+*.pyc
+
+README-TAILWIND.md

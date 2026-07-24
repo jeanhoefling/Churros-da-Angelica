@@ -4,34 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Churros da Angélica</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/output.css') }}">
 </head>
 <body>
-    <header>
+    <header class="min-h-[15vh] bg-marrom-escuro flex animate-aparecer max-md:min-h-0 max-md:py-6">
         {% include "menu.html" %}
     </header>
     <main>
-        <div class="section-1">
-            <div>
-                <h1>Os melhores churros e crepes da cidade!</h1>
-                <p>Feitos com carinho para adoçar o seu dia.</p>
-                <a><img src="{{ url_for('static', filename='assets/coracao.png') }}">Ver produtos</a>
+        <div class="section-hidden min-h-[55vh] w-full flex bg-[url('/static/assets/fundo_section_1.png')] bg-no-repeat bg-cover bg-[65%_20%] pt-[15%] animate-subir md:min-h-[70vh] md:bg-[50%_20%] md:pt-[10%]">
+            <div class="w-[88%] mx-auto text-center md:w-[50%] md:ml-[6%] md:mx-0 md:text-left lg:w-[30%] lg:ml-[5%]">
+                <h1 class="text-[1.9rem] leading-tight md:text-[2.4rem] lg:text-[3rem]">Os melhores churros e crepes da cidade!</h1>
+                <p class="text-[1.05rem] font-semibold mt-[10%] md:text-[1.2rem] lg:text-[1.4rem]">Feitos com carinho para adoçar o seu dia.</p>
+                <a class="inline-flex items-center justify-center gap-2 bg-rosa text-white font-bold w-fit rounded-lg no-underline mt-[8%] py-[4%] px-[8%] shadow-brand-sm transition duration-200 mx-auto md:mx-0 hover:scale-105 hover:bg-rosa-escuro hover:shadow-brand-md text-[1rem] lg:text-[1.4rem]">
+                    <img src="{{ url_for('static', filename='assets/coracao.png') }}" class="w-[22px] h-[22px]">Ver produtos
+                </a>
             </div>
         </div>
-        <div class="section-2 section-hidden">
-            <h1>Nossos Produtos</h1>
-            <div class="cards">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}">
-                    <h2>Churros Tradicional</h2>
-                    <p>Açúcar e doce de leite</p>
-                    <h3>R$ 7,00</h3>
+
+        <div class="section-hidden bg-fundo-claro pt-[4%] pb-[8%] max-md:pt-[8%]">
+            <h1 class="text-[1.8rem] ml-[6%] text-center md:ml-[11%] md:text-left lg:text-[2.5rem]">Nossos Produtos</h1>
+            <div class="flex flex-col gap-8 w-[88%] mx-auto mt-[4%] md:flex-row md:justify-between md:gap-[2%] md:w-[92%] lg:w-[80%] lg:gap-[3%]">
+                <div class="flex-1 bg-white border border-borda rounded-lg shadow-brand-sm text-center py-[4%] px-[5%] transition duration-200 hover:-translate-y-1.5 hover:shadow-brand-md">
+                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}" class="mx-auto">
+                    <h2 class="text-[1.3rem]">Churros Tradicional</h2>
+                    <p class="text-base text-[#6b5a4e] mt-2">Açúcar e doce de leite</p>
+                    <h3 class="text-rosa text-[1.4rem] font-extrabold mt-[3%]">R$ 7,00</h3>
                 </div>
             </div>
         </div>
         <script src="{{ url_for('static', filename='script.js') }}"></script>
     </main>
-    <footer>
+    <footer class="bg-marrom-escuro">
         {% include "footer.html" %}
     </footer>
 </body>

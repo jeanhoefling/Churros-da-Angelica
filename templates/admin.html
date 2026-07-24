@@ -4,53 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Churros da Angélica</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/output.css') }}">
 </head>
 <body>
-    <header>
+    <header class="min-h-[15vh] bg-marrom-escuro flex animate-aparecer max-md:min-h-0 max-md:py-6">
         {% include "menu.html" %}
     </header>
-    <main id="admin-page">
-        <div id="admin-header">
-            <h1>Painel Admin</h1>
-            <h2>Cadastre e gerencie os produtos</h2>
+    <main id="admin-page" class="max-w-[1000px] mx-auto px-6 pt-10 pb-16">
+        <div id="admin-header" class="mb-2">
+            <h1 class="text-[2rem] mb-1">Painel Admin</h1>
+            <h2 class="text-base font-normal text-[#8a7566] mb-8">Cadastre e gerencie os produtos</h2>
         </div>
 
-        <div id="admin-content">
-            <div id="cadastro-produto">
-                <h3>Novo Produto</h3>
-                <form action="/admin" method="POST">
-                    <label for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" placeholder="Ex: Churros Tradicional" required>
+        <div id="admin-content" class="grid grid-cols-1 gap-6 items-start md:grid-cols-[320px_1fr]">
 
-                    <label for="sabor">Sabor</label>
-                    <input type="text" id="sabor" name="sabor" placeholder="Opcional - deixe em branco se não houver">
+            <div id="cadastro-produto" class="bg-fundo-claro border border-borda rounded-2xl p-6">
+                <h3 class="text-[1.15rem] mb-4">Novo Produto</h3>
+                <form action="/admin" method="POST" class="flex flex-col gap-1.5">
+                    <label for="nome" class="text-[0.85rem] text-[#8a7566] mt-2.5">Nome</label>
+                    <input type="text" id="nome" name="nome" placeholder="Ex: Churros Tradicional" required
+                           class="py-2.5 px-3 border-borda rounded-[10px] bg-white text-[0.95rem] focus:outline-none focus:border-rosa">
 
-                    <label for="valor">Valor</label>
-                    <input type="number" id="valor" name="valor" placeholder="0" required>
+                    <label for="sabor" class="text-[0.85rem] text-[#8a7566] mt-2.5">Sabor</label>
+                    <input type="text" id="sabor" name="sabor" placeholder="Opcional - deixe em branco se não houver"
+                           class="py-2.5 px-3 border-borda rounded-[10px] bg-white text-[0.95rem] focus:outline-none focus:border-rosa">
 
-                    <button class="btn-1" type="submit">Cadastrar</button>
+                    <label for="valor" class="text-[0.85rem] text-[#8a7566] mt-2.5">Valor</label>
+                    <input type="number" id="valor" name="valor" placeholder="0" required
+                           class="py-2.5 px-3 border-borda rounded-[10px] bg-white text-[0.95rem] focus:outline-none focus:border-rosa">
+
+                    <button class="btn-1 mt-5 py-3 rounded-[10px]" type="submit">Cadastrar</button>
                 </form>
             </div>
 
-            <div id="lista-produtos">
-                <h3>Produtos Cadastrados</h3>
-                <table>
-                    <thead>
+            <div id="lista-produtos" class="bg-white border border-borda rounded-2xl p-6">
+                <h3 class="text-[1.15rem] mb-4">Produtos Cadastrados</h3>
+                <table class="w-full border-collapse">
+                    <thead class="max-md:hidden">
                         <tr>
-                            <th>Nome</th>
-                            <th>Sabor</th>
-                            <th>Valor</th>
-                            <th>Remover</th>
+                            <th class="text-left text-[0.8rem] uppercase tracking-wide text-[#8a7566] border-b-2 border-borda py-2.5 px-3">Nome</th>
+                            <th class="text-left text-[0.8rem] uppercase tracking-wide text-[#8a7566] border-b-2 border-borda py-2.5 px-3">Sabor</th>
+                            <th class="text-left text-[0.8rem] uppercase tracking-wide text-[#8a7566] border-b-2 border-borda py-2.5 px-3">Valor</th>
+                            <th class="text-left text-[0.8rem] uppercase tracking-wide text-[#8a7566] border-b-2 border-borda py-2.5 px-3">Remover</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for produto in produtos %}
-                        <tr>
-                            <td data-label="Nome">{{ produto[1] }}</td>
-                            <td data-label="Sabor">{{ produto[2] or "-" }}</td>
-                            <td data-label="Valor">R$ {{ "%.2f"|format(produto[3]) }}</td>
-                            <td data-label="Remover">
+                        <tr class="max-md:block max-md:border max-md:border-borda max-md:rounded-xl max-md:mb-3 max-md:px-3 max-md:py-2 hover:bg-fundo-claro max-md:hover:bg-transparent">
+                            <td data-label="Nome" class="py-3 px-3 border-b border-borda text-[0.95rem] text-[#3d2b1f] max-md:block max-md:border-none max-md:py-1.5 max-md:px-0 max-md:flex max-md:justify-between md:before:content-none before:content-[attr(data-label)] before:font-semibold before:text-[#8a7566]">{{ produto[1] }}</td>
+                            <td data-label="Sabor" class="py-3 px-3 border-b border-borda text-[0.95rem] text-[#3d2b1f] max-md:block max-md:border-none max-md:py-1.5 max-md:px-0 max-md:flex max-md:justify-between md:before:content-none before:content-[attr(data-label)] before:font-semibold before:text-[#8a7566]">{{ produto[2] or "-" }}</td>
+                            <td data-label="Valor" class="py-3 px-3 border-b border-borda text-[0.95rem] text-[#3d2b1f] max-md:block max-md:border-none max-md:py-1.5 max-md:px-0 max-md:flex max-md:justify-between md:before:content-none before:content-[attr(data-label)] before:font-semibold before:text-[#8a7566]">R$ {{ "%.2f"|format(produto[3]) }}</td>
+                            <td data-label="Remover" class="py-3 px-3 border-b border-borda text-[0.95rem] text-[#3d2b1f] max-md:block max-md:border-none max-md:py-1.5 max-md:px-0 max-md:flex max-md:justify-between max-md:items-center md:before:content-none before:content-[attr(data-label)] before:font-semibold before:text-[#8a7566]">
                                 <form action="/remover-produto" method="POST" class="form-remover">
                                     <input type="hidden" name="id_produto" value="{{ produto[0] }}">
                                     <button type="submit" class="btn-remover">Remover</button>
@@ -59,7 +63,7 @@
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="4" id="lista-vazia">Nenhum produto cadastrado</td>
+                            <td colspan="4" id="lista-vazia" class="text-center text-[#8a7566] py-6">Nenhum produto cadastrado</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -67,7 +71,7 @@
             </div>
         </div>
     </main>
-    <footer>
+    <footer class="bg-marrom-escuro">
         {% include "footer.html" %}
     </footer>
     <script src="{{ url_for('static', filename='admin.js') }}"></script>

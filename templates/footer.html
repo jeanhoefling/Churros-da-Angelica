@@ -1,18 +1,31 @@
-<img src="{{  url_for('static', filename='assets/logo.png')  }}">
-<div id="endereco">
-    <h1>Endereço:</h1>
-    <p>Rua Geraldo dos Santos, n°259. Júlio de Castilhos - RS</p>
-</div>
-<div id="paginas-footer">
-    <h1>Páginas:</h1>
-    <a href="/">Home</a>
-    <a href="/vendas">Vendas</a>
-    <a href="/pedidos">Pedido</a>
-</div>
-<div id="contatos">
-    <h1>Contatos</h1>
-    <div>
-        <a href="https://wa.me/55997009084" target="_blank"><img src="{{ url_for('static', filename='assets/whatsapp.png') }}"></a>
-        <a href="https://www.instagram.com/angelica.cancian/" target="_blank"><img src="{{ url_for('static', filename='assets/instagram.png') }}"></a>
+<div class="flex flex-col items-center text-center gap-6 px-[8%] py-[6%] md:flex-row md:items-start md:justify-between md:text-left md:px-[4%] md:py-[3%] md:gap-4">
+
+    <img src="{{ url_for('static', filename='assets/logo.png') }}" class="w-[70px] self-center md:w-[90px]">
+
+    <div class="flex flex-col items-center md:items-start">
+        <h1 class="text-white text-[1.05rem] mb-1">Endereço:</h1>
+        <p class="pt-2 text-[#cbb8ac] text-[0.95rem] transition duration-200 hover:text-white hover:scale-105">
+            Rua Geraldo dos Santos, n°259. Júlio de Castilhos - RS
+        </p>
     </div>
+
+    <div id="paginas-footer" class="flex flex-col items-center md:items-start">
+        <h1 class="text-white text-[1.05rem] mb-1">Páginas:</h1>
+        <a href="/" class="pt-2 text-[#cbb8ac] text-[0.95rem] no-underline transition duration-200 hover:text-white hover:scale-105">Home</a>
+        <a href="/vendas" class="pt-2 text-[#cbb8ac] text-[0.95rem] no-underline transition duration-200 hover:text-white hover:scale-105">Vendas</a>
+        <a href="/pedidos" class="pt-2 text-[#cbb8ac] text-[0.95rem] no-underline transition duration-200 hover:text-white hover:scale-105">Pedido</a>
+    </div>
+
+    <div id="contatos" class="flex flex-col items-center">
+        <h1 class="text-white text-[1.05rem] mb-1">Contatos</h1>
+        <div class="flex flex-row items-center justify-center gap-4 mt-2">
+            <a href="https://wa.me/55997009084" target="_blank" class="transition duration-200 hover:scale-110">
+                <img src="{{ url_for('static', filename='assets/whatsapp.png') }}" class="w-7 h-7">
+            </a>
+            <a href="https://www.instagram.com/angelica.cancian/" target="_blank" class="transition duration-200 hover:scale-110">
+                <img src="{{ url_for('static', filename='assets/instagram.png') }}" class="w-7 h-7">
+            </a>
+        </div>
+    </div>
+
 </div>

@@ -4,87 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Churros da Angélica</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/output.css') }}">
 </head>
 <body>
-    <header>
+    <header class="min-h-[15vh] bg-marrom-escuro flex animate-aparecer max-md:min-h-0 max-md:py-6">
         {% include "menu.html" %}
     </header>
-    <main id="vendas-page">
-        <div id="header">
+    <main id="vendas-page" class="bg-fundo-creme px-[3%] py-[5vh] max-md:px-[5%] max-md:py-[4vh]">
+        <div id="header" class="flex items-center flex-wrap gap-4 max-md:flex-col max-md:items-start">
             <div>
-                <h1>Relatório de Vendas</h1>
-                <h2>Acompanhe suas vendas e desempenho</h2>
+                <h1 class="text-[1.7rem] md:text-[2rem] lg:text-[2.25rem]">Relatório de Vendas</h1>
+                <h2 class="text-[1.15rem] text-[#6b5a4e] font-semibold mt-2">Acompanhe suas vendas e desempenho</h2>
             </div>
-            <form action="/vendas" method="GET">
-                <label for="data_inicio">Data inicial</label>
-                <input type="date" name="data_inicio" id="data_inicio" value="{{ data_inicio }}">
-                <label for="data_fim">Data final</label>
-                <input type="date" name="data_fim" id="data_fim" value="{{ data_fim }}">
-                <button id="btn-filtro">Filtrar</button>
+            <form action="/vendas" method="GET" class="flex items-center gap-[2%] ml-auto mr-[7.5%] max-md:w-full max-md:ml-0 max-md:mr-0 max-md:flex-col max-md:items-stretch">
+                <label for="data_inicio" class="text-sm font-semibold text-[#6b5a4e] whitespace-nowrap">Data inicial</label>
+                <input type="date" name="data_inicio" id="data_inicio" value="{{ data_inicio }}"
+                       class="py-2 px-[2%] rounded-md border-borda max-md:w-full">
+                <label for="data_fim" class="text-sm font-semibold text-[#6b5a4e] whitespace-nowrap">Data final</label>
+                <input type="date" name="data_fim" id="data_fim" value="{{ data_fim }}"
+                       class="py-2 px-[2%] rounded-md border-borda max-md:w-full">
+                <button id="btn-filtro"
+                        class="bg-rosa text-white font-bold border-2 border-rosa rounded-md py-[1.1vh] px-[6%] transition duration-200 hover:bg-rosa-escuro hover:border-rosa-escuro max-md:w-full max-md:mt-1">
+                    Filtrar
+                </button>
             </form>
         </div>
-        <div id="cards">
-            <div class="card">
-                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+
+        <div id="cards" class="mt-6 flex flex-wrap gap-[2%] max-md:flex-col">
+            <div class="card flex items-center gap-[5%] p-[2%_3%] flex-[1_1_20%] bg-white border border-borda rounded-lg shadow-brand-sm transition duration-200 hover:-translate-y-1 hover:shadow-brand-md md:flex-[1_1_45%] max-md:w-full max-md:mt-4">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}" class="w-11 h-11">
                 <div>
-                    <p>Total de Vendas</p>
-                    <p>R$ {{ data_cards[0][0] or 0 }}.00</p>
+                    <p class="text-[#6b5a4e] text-[0.95rem] font-semibold">Total de Vendas</p>
+                    <p class="text-marrom-escuro text-2xl font-extrabold">R$ {{ data_cards[0][0] or 0 }}.00</p>
                 </div>
             </div>
-            <div class="card">
-                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+            <div class="card flex items-center gap-[5%] p-[2%_3%] flex-[1_1_20%] bg-white border border-borda rounded-lg shadow-brand-sm transition duration-200 hover:-translate-y-1 hover:shadow-brand-md md:flex-[1_1_45%] max-md:w-full max-md:mt-4">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}" class="w-11 h-11">
                 <div>
-                    <p>Pedidos</p>
-                    <p>{{ data_cards[0][1] }}</p>
+                    <p class="text-[#6b5a4e] text-[0.95rem] font-semibold">Pedidos</p>
+                    <p class="text-marrom-escuro text-2xl font-extrabold">{{ data_cards[0][1] }}</p>
                 </div>
             </div>
-            <div class="card">
-                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+            <div class="card flex items-center gap-[5%] p-[2%_3%] flex-[1_1_20%] bg-white border border-borda rounded-lg shadow-brand-sm transition duration-200 hover:-translate-y-1 hover:shadow-brand-md md:flex-[1_1_45%] max-md:w-full max-md:mt-4">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}" class="w-11 h-11">
                 <div>
-                    <p>Ticket Médio</p>
-                    <p>R$ {{ "%.2f"|format(data_cards[0][2] or 0) }}</p>
+                    <p class="text-[#6b5a4e] text-[0.95rem] font-semibold">Ticket Médio</p>
+                    <p class="text-marrom-escuro text-2xl font-extrabold">R$ {{ "%.2f"|format(data_cards[0][2] or 0) }}</p>
                 </div>
             </div>
-            <div class="card">
-                <img src="{{ url_for('static', filename='assets/coracao.png') }}">
+            <div class="card flex items-center gap-[5%] p-[2%_3%] flex-[1_1_20%] bg-white border border-borda rounded-lg shadow-brand-sm transition duration-200 hover:-translate-y-1 hover:shadow-brand-md md:flex-[1_1_45%] max-md:w-full max-md:mt-4">
+                <img src="{{ url_for('static', filename='assets/coracao.png') }}" class="w-11 h-11">
                 <div>
-                    <p>Produtos Vendidos</p>
-                    <p>{{ produtos_vendidos }}</p>
+                    <p class="text-[#6b5a4e] text-[0.95rem] font-semibold">Produtos Vendidos</p>
+                    <p class="text-marrom-escuro text-2xl font-extrabold">{{ produtos_vendidos }}</p>
                 </div>
             </div>
         </div>
-        <div id="grafico">
-            <div class="grafico">
+
+        <div id="grafico" class="flex mt-6 gap-[3%] max-md:flex-col md:flex-wrap lg:flex-nowrap">
+            <div class="grafico w-[68%] h-[340px] bg-white border border-borda rounded-lg shadow-brand-sm p-[2%] md:w-full lg:w-[68%] max-md:w-full max-md:h-[260px]">
                 <canvas id="graficoVendas"></canvas>
             </div>
-            <div id="mais-vendidos">
-                <h3>Mais Vendidos</h3>
+            <div id="mais-vendidos" class="flex flex-col bg-white border border-borda rounded-lg shadow-brand-sm p-[2%] w-[29%] md:w-full md:flex-row md:flex-wrap md:justify-between md:gap-[2%] lg:w-[29%] lg:flex-col max-md:w-full">
+                <h3 class="text-[1.3rem] mb-4 md:w-full lg:w-auto">Mais Vendidos</h3>
                 {% for produto in mais_vendidos %}
-                <div>
-                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}">
-                    <div>
-                        <h4>{{ produto[0] }}</h4>
-                        <p>{{ produto[1] }} Unidades</p>
+                <div class="flex flex-row items-center mb-3 gap-[5%] pb-3 border-b border-fundo-claro md:flex-[1_1_28%] md:flex-col md:text-center md:border-none lg:flex-row lg:text-left">
+                    <img src="{{ url_for('static', filename='assets/churros-card.png') }}" class="w-11 h-11">
+                    <div class="flex flex-col border-none pb-0 mb-0">
+                        <h4 class="text-base">{{ produto[0] }}</h4>
+                        <p class="text-[0.9rem] text-[#6b5a4e]">{{ produto[1] }} Unidades</p>
                     </div>
                 </div>
                 {% else %}
-                <p>Nenhuma venda registrada</p>
+                <p class="text-[#6b5a4e]">Nenhuma venda registrada</p>
                 {% endfor %}
             </div>
         </div>
-        <div id="ultimas-vendas">
-            <h3>Últimas Vendas</h3>
-            <div id="header-row">
-                <h4>Data</h4>
-                <h4>Cliente</h4>
-                <h4>Itens</h4>
-                <h4>Total</h4>
+
+        <div id="ultimas-vendas" class="mt-6 p-[2%] bg-white border border-borda rounded-lg shadow-brand-sm">
+            <h3 class="text-[1.3rem] text-marrom-texto">Últimas Vendas</h3>
+            <div id="header-row" class="flex bg-fundo-claro rounded-md py-[1vh] px-[2%] mt-4 max-md:hidden">
+                <h4 class="text-[1.05rem] w-[15%]">Data</h4>
+                <h4 class="text-[1.05rem] w-1/5">Cliente</h4>
+                <h4 class="text-[1.05rem] w-1/2">Itens</h4>
+                <h4 class="text-[1.05rem] w-[15%]">Total</h4>
             </div>
-            <button class="btn-1" id="btn-ultimas-vendas">Ver todas as Vendas</button>
+            <button class="btn-1 flex py-[1.2vh] px-[4%] ml-auto mt-6 max-md:w-full max-md:justify-center" id="btn-ultimas-vendas">Ver todas as Vendas</button>
         </div>
     </main>
-    <footer>
+    <footer class="bg-marrom-escuro">
         {% include "footer.html" %}
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -95,7 +103,6 @@
         document.querySelector("#btn-ultimas-vendas").addEventListener("click", function () {
             callCreate({{ ultimas_vendas | tojson }}, this);
         });
-    </script>
     </script>
 </body>
 </html>

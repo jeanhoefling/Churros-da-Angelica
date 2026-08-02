@@ -42,17 +42,26 @@
 
             <div id="dados-pedido" class="flex flex-col w-[70%] p-[3%] bg-white border border-borda rounded-lg shadow-brand-sm max-md:w-full">
                 <h3 class="text-[1.5rem] mt-2">Itens do Pedido</h3>
+                <div id="itens" class="mt-4 overflow-x-auto rounded-xl border border-borda shadow-brand-sm">
 
-                <div id="itens" class="mt-4">
-                    <div id="itens-head" class="flex px-[1.5%] py-[1vh] bg-fundo-claro border border-borda rounded-t-md max-md:hidden">
-                        <h4 class="mt-0 text-[#6b5a4e] w-[30%]">Produto</h4>
-                        <h4 class="mt-0 text-[#6b5a4e] w-1/4">Sabor</h4>
-                        <h4 class="mt-0 text-[#6b5a4e] w-1/4">Quantidade</h4>
-                        <h4 class="mt-0 text-[#6b5a4e] w-fit">Preço Unit.</h4>
-                        <h4 class="mt-0 text-[#6b5a4e] flex-1 text-right">Total</h4>
-                    </div>
+                    <table class="w-full table-fixed border-collapse text-sm">
+                        <thead class="bg-marrom-escuro text-white">
+                            <tr>
+                                <th class="text-left font-semibold p-4 w-[28%]">Produto</th>
+                                <th class="text-left font-semibold p-4 w-[24%]">Sabor</th>
+                                <th class="text-center font-semibold p-4 w-[20%]">Quantidade</th>
+                                <th class="text-center font-semibold p-4 w-[13%]">Preço</th>
+                                <th class="text-center font-semibold p-4 w-[13%]">Total</th>
+                                <th class="p-3 w-[2%]"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="itens-body" class="divide-y divide-borda bg-white">
+                        </tbody>
+
+                    </table>
+
                 </div>
-
                 <div id="adicionar-total" class="flex items-center justify-between flex-wrap gap-4 mt-4">
                     <button type="button" id="btn_pedidos_adicionar"
                             class="py-[1.4vh] px-[4%] border-2 border-rosa rounded-md text-rosa bg-white font-bold transition duration-200 hover:bg-rosa hover:text-white max-md:w-full">

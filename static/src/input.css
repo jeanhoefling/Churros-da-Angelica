@@ -133,51 +133,6 @@
            hover:bg-[#ffecec] hover:text-[#c0392b] hover:border-[#c0392b];
   }
 
-  /* ---------- INSERIR PEDIDO (linhas geradas por inserir-pedido.js) ---------- */
-  #inserir-pedido-page .itens-row {
-    @apply flex items-center flex-wrap gap-x-[3%] gap-y-3 p-[1.4vh_1.5%] border border-t-0
-           border-borda bg-white transition duration-200 hover:bg-[#fbf6f0]
-           max-md:rounded-md max-md:border-t max-md:mt-3;
-  }
-
-  #inserir-pedido-page .itens-row .produto {
-    @apply cursor-pointer mr-[10%] w-1/5 px-[0.5%] py-2 rounded-md max-md:w-full max-md:mr-0;
-  }
-
-  #inserir-pedido-page .itens-row .sabores select {
-    @apply cursor-pointer rounded-md px-2 py-2;
-  }
-
-  #inserir-pedido-page .itens-row .preco_unidade {
-    @apply w-fit font-bold max-md:flex-1;
-  }
-
-  #inserir-pedido-page .itens-row .preco_total {
-    @apply w-1/4 font-bold text-rosa-escuro max-md:flex-1;
-  }
-
-  #inserir-pedido-page .div-quantidade {
-    @apply flex items-center w-[12%] mr-[13%] max-md:w-2/5 max-md:mr-0;
-  }
-
-  #inserir-pedido-page .div-quantidade button {
-    @apply w-8 h-8 border border-borda bg-fundo-claro text-marrom-texto font-bold rounded-md
-           transition duration-200 hover:bg-rosa hover:text-white hover:border-rosa;
-  }
-
-  #inserir-pedido-page .div-quantidade input {
-    @apply w-11 text-center mx-1;
-  }
-
-  #inserir-pedido-page .remover {
-    @apply flex-1 text-right max-md:flex-none max-md:ml-auto;
-  }
-
-  #inserir-pedido-page .remover img {
-    @apply w-[22px] h-[22px] ml-auto opacity-75 transition duration-200
-           hover:scale-110 hover:opacity-100 cursor-pointer;
-  }
-
   /* ---------- VENDAS (linhas geradas por vendas.js) ---------- */
   #vendas-page #ultimas-vendas .row {
     @apply flex items-center bg-white border-b border-fundo-claro px-[2%] py-[1.2vh]

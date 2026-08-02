@@ -36,7 +36,7 @@ function atualizarLinha(row){
     // Possui sabores
     if(produto.sabores.length){
 
-        let html=`<select name="produtos[]">`;
+        let html=`<select name="produtos[]" class="w-full min-w-0 rounded-md border border-borda px-3 py-2 focus:border-rosa focus:ring-2 focus:ring-rosa/30 outline-none">`;
 
         produto.sabores.forEach(s=>{
             html+=`
@@ -61,7 +61,7 @@ function atualizarLinha(row){
         `;
 
         saboresDiv.innerHTML+=`
-            <span>-</span>
+            <span class="text-[#9a8b7d]">—</span>
         `;
 
     }
@@ -73,7 +73,7 @@ function atualizarLinha(row){
 
 const TAXA_TELE = 8;
 
-const itens = document.querySelector("#itens");
+const itens = document.querySelector("#itens-body");
 const totalPedido = document.querySelector("#adicionar-total p");
 
 let optionsProdutos = "";
@@ -88,36 +88,65 @@ produtos.forEach(produto => {
 
 
 function criarLinha(){
-    itens.insertAdjacentHTML("beforeend",`
-        <div class="itens-row">
+    itens.insertAdjacentHTML("beforeend", `
+    <tr class="itens-row hover:bg-fundo-claro/70 transition-colors duration-200 align-middle">
 
-            <select class="produto">
+        <td class="p-3 align-middle">
+            <select class="produto w-full min-w-0 rounded-md border border-borda px-3 py-2 focus:border-rosa focus:ring-2 focus:ring-rosa/30 outline-none">
                 ${optionsProdutos}
             </select>
+        </td>
 
+        <td class="p-3 align-middle">
             <div class="sabores"></div>
+        </td>
 
-            <div class="div-quantidade">
-                <button type="button" class="menos">-</button>
+        <td class="p-3 align-middle">
+
+            <div class="flex justify-center items-center gap-2">
+
+                <button
+                    type="button"
+                    class="menos w-8 h-8 shrink-0 rounded-md border border-borda text-marrom-texto font-bold hover:bg-rosa hover:text-white hover:border-rosa transition-colors duration-200">
+                    −
+                </button>
 
                 <input
                     type="number"
                     value="1"
                     min="1"
-                    name="quantidades[]">
+                    name="quantidades[]"
+                    class="w-14 text-center py-1.5 rounded-md border border-borda focus:border-rosa focus:ring-2 focus:ring-rosa/30 outline-none">
 
-                <button type="button" class="mais">+</button>
+                <button
+                    type="button"
+                    class="mais w-8 h-8 shrink-0 rounded-md border border-borda text-marrom-texto font-bold hover:bg-rosa hover:text-white hover:border-rosa transition-colors duration-200">
+                    +
+                </button>
+
             </div>
 
-            <p class="preco_unidade"></p>
+        </td>
 
-            <p class="preco_total"></p>
+        <td class="p-3 align-middle text-center preco_unidade text-marrom-texto"></td>
 
-            <a class="remover">
-                <img src="/static/assets/excluir.png">
-            </a>
+        <td class="p-3 align-middle text-center font-bold preco_total text-rosa-escuro"></td>
 
-        </div>
+        <td class="p-3 align-middle text-center">
+
+            <button
+                type="button"
+                class="remover p-1.5 rounded-md hover:bg-red-50 transition-colors duration-200">
+
+                <img
+                    src="/static/assets/excluir.png"
+                    class="w-5 mx-auto">
+
+            </button>
+
+        </td>
+
+    </tr>
     `);
 
     const row = itens.lastElementChild;
@@ -127,6 +156,12 @@ function criarLinha(){
     row.querySelector(".mais").addEventListener("click",()=>somar(row,1));
 
     row.querySelector(".menos").addEventListener("click",()=>somar(row,-1));
+
+    row.querySelector("input[type=number]").addEventListener("input",()=>{
+        const input=row.querySelector("input[type=number]");
+        if(input.value<1) input.value=1;
+        atualizarTotal();
+    });
 
     row.querySelector(".remover").addEventListener("click",()=>{
             row.remove();
